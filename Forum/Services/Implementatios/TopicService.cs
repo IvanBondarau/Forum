@@ -1,4 +1,7 @@
-﻿using Forum.Models;
+﻿using Forum.Exceptions;
+using Forum.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,22 +24,69 @@ namespace Forum.Services.Implementations
             };
         }
 
-        public Topic AddTopic(Topic topic)
+        public Topic Create(Topic topic)
         {
             _topics.Add(topic);
             return topic;
         }
 
-        public IList<Topic> GetTopicsBySection(Section section)
+        public Topic Read(int id)
+        {
+            Topic searchResult =  (from topic in _topics
+                                    where topic.Id.Equals(id)
+                                    select topic).First();
+            if (searchResult == null)
+            {
+                throw new EntityNotFoundException();
+            }
+
+            return searchResult;
+        }
+
+        public void Update(Topic item)
+        {
+            var removed = from topic in _topics
+            where topic.Id == item.Id
+            select topic;
+            foreach (var removeItem in removed)
+            {
+                _topics.Remove(removeItem);
+            }
+
+            _topics.Add(item);
+        }
+
+         
+        public void Delete(int id)
+        {
+            Topic searchResult = (from topic in _topics
+                                  where topic.Id.Equals(id)
+                                  select topic).First();
+            if (searchResult == null)
+            {
+                throw new EntityNotFoundException();
+            }
+
+            _topics.Remove(searchResult);
+        }
+
+        public ICollection<Topic> FindAll()
+        {
+            return _topics;
+        }
+
+        public ICollection<Topic> FindBySection(Section section)
         {
             return (from topic in _topics
                     where topic.Section.Equals(section)
                     select topic).ToList();
         }
 
-        public IList<Topic> GetTopics()
+        public Topic FindByName(string name)
         {
-            return _topics;
+            return (from topic in _topics
+                    where topic.Name.Equals(name)
+                    select topic).FirstOrDefault();
         }
     }
 }

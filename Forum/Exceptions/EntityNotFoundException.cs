@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Forum.Services
+namespace Forum.Exceptions
 {
-    public interface IMessageService
+    public class EntityNotFoundException: SystemException
     {
+
     }
 }

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Forum.Services
 {
-    public interface ITopicService
+    public interface ITopicService : ICrudService<Topic, int>
     {
-        IList<Topic> GetTopics();
-        IList<Topic> GetTopicsBySection(Section section);
-        Topic AddTopic(Topic topic);
+        Topic FindByName(string name);
+        ICollection<Topic> FindBySection(Section section);
     }
 }

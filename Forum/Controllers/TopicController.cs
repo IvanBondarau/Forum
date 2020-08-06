@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Forum.Models;
 using Forum.Services;
+using Forum.Services.Implementations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.Controllers
@@ -19,13 +20,23 @@ namespace Forum.Controllers
         
         public string Index()
         {
-            return String.Join("\n", _topicService.GetTopics());
+            return String.Join("\n", _topicService.FindAll());
         }
 
         public string GetBySection(string sectionName)
         {
             Section section = new Section(sectionName);
-            return String.Join("\n", _topicService.GetTopicsBySection(section));
+            return String.Join("\n", _topicService.FindBySection(section));
+        }
+
+        public string GetByName(string name)
+        {
+            Topic searchResult = _topicService.FindByName(name);
+            if (searchResult == null)
+            {
+                return "Not found";
+            }
+            return searchResult.ToString();
         }
     }
 }

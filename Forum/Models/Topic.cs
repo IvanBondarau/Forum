@@ -31,5 +31,17 @@ namespace Forum.Models
 
         public override string ToString()
             => JsonSerializer.Serialize(this);
+
+        public override bool Equals(object obj)
+        {
+            return obj is Topic topic &&
+                   Id == topic.Id &&
+                   Name == topic.Name &&
+                   Description == topic.Description &&
+                   EqualityComparer<User>.Default.Equals(Author, topic.Author) &&
+                   Created == topic.Created &&
+                   EqualityComparer<Section>.Default.Equals(Section, topic.Section) &&
+                   EqualityComparer<IList<Message>>.Default.Equals(Messages, topic.Messages);
+        }
     }
 }
