@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Forum.Models
 {
-    public class User
+    public class User: BaseModel
     {
-        public int Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -28,6 +27,17 @@ namespace Forum.Models
         public override string ToString()
             => JsonSerializer.Serialize(this);
 
+        public override bool Equals(object obj)
+        {
+            return obj is User user &&
+                   Id == user.Id &&
+                   Username == user.Username &&
+                   Email == user.Email;
+        }
 
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Username, Email);
+        }
     }
 }

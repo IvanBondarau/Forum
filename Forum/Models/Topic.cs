@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Forum.Models
 {
-    public class Topic
+    public class Topic: BaseModel
     {
-        public int Id { get; set; }
         public String Name { get; set; }
         public String Description { get; set; }
         public User Author { get; set; }
@@ -36,12 +35,12 @@ namespace Forum.Models
         {
             return obj is Topic topic &&
                    Id == topic.Id &&
-                   Name == topic.Name &&
-                   Description == topic.Description &&
-                   EqualityComparer<User>.Default.Equals(Author, topic.Author) &&
-                   Created == topic.Created &&
-                   EqualityComparer<Section>.Default.Equals(Section, topic.Section) &&
-                   EqualityComparer<IList<Message>>.Default.Equals(Messages, topic.Messages);
+                   Name == topic.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name);
         }
     }
 }

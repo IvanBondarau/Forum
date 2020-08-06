@@ -23,13 +23,9 @@ namespace Forum.Controllers
             return String.Join("\n", _topicService.FindAll());
         }
 
-        public string GetBySection(string sectionName)
-        {
-            Section section = new Section(sectionName);
-            return String.Join("\n", _topicService.FindBySection(section));
-        }
+        
 
-        public string GetByName(string name)
+        public string Details(string name)
         {
             Topic searchResult = _topicService.FindByName(name);
             if (searchResult == null)
@@ -37,6 +33,12 @@ namespace Forum.Controllers
                 return "Not found";
             }
             return searchResult.ToString();
+        }
+
+        public string Filter(string sectionName)
+        {
+            Section section = new Section(sectionName);
+            return String.Join("\n", _topicService.FindBySection(section));
         }
     }
 }

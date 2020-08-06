@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Forum.Models
 {
-    public class Profile
+    public class Profile: BaseModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string ImagePath { get; set; }
         public string About { get; set; }
@@ -25,5 +24,19 @@ namespace Forum.Models
 
         public override string ToString()
             => JsonSerializer.Serialize(this);
+
+        public override bool Equals(object obj)
+        {
+            return obj is Profile profile &&
+                   Id == profile.Id &&
+                   Name == profile.Name &&
+                   ImagePath == profile.ImagePath &&
+                   About == profile.About;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name, ImagePath, About);
+        }
     }
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Forum.Models
 {
-    public class Message
+    public class Message: BaseModel
     {
-        public int Id { get; set; }
         public string Text { get; set; }
         public User Author { get; set; }
         public DateTime Created { get; set; }
@@ -27,5 +26,20 @@ namespace Forum.Models
 
         public override string ToString()
             => JsonSerializer.Serialize(this);
+
+        public override bool Equals(object obj)
+        {
+            return obj is Message message &&
+                   Id == message.Id &&
+                   Text == message.Text &&
+                   EqualityComparer<User>.Default.Equals(Author, message.Author) &&
+                   Created == message.Created &&
+                   EqualityComparer<Topic>.Default.Equals(Topic, message.Topic);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Text, Author, Created, Topic);
+        }
     }
 }

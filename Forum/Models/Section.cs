@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Forum.Models
 {
-    public class Section
+    public class Section: BaseModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public IList<Topic> Topics { get; set; }
 
@@ -25,7 +24,13 @@ namespace Forum.Models
         public override bool Equals(object obj)
         {
             return obj is Section section &&
+                   Id == section.Id &&
                    Name == section.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Name);
         }
     }
 }
