@@ -21,5 +21,11 @@ namespace Forum.Models
         
         public override string ToString()
             => JsonSerializer.Serialize(this);
+
+        public override bool Equals(object obj)
+        {
+            return obj is Section section &&
+                   Name == section.Name;
+        }
     }
 }

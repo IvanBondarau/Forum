@@ -13,17 +13,20 @@ namespace Forum.Models
         public String Description { get; set; }
         public User Author { get; set; }
         public DateTime Created { get; set; }
+        public Section Section { get; set; }
         public IList<Message> Messages { get; set; }
 
         public Topic(string name = null, 
                      string description = null, 
-                     User author = null)
+                     User author = null,
+                     Section section = null)
         {
             Name = name;
             Description = description;
             Author = author;
             Messages = new List<Message>();
             Created = DateTime.Now;
+            Section = section;
         }
 
         public override string ToString()

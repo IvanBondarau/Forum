@@ -13,12 +13,16 @@ namespace Forum.Models
         public User Author { get; set; }
         public DateTime Created { get; set; }
 
+        public Topic Topic { get; set; }
+
         public Message(string text = null,
-                       User author = null)
+                       User author = null,
+                       Topic topic = null)
         {
             Text = text;
             Author = author;
             Created = DateTime.Now;
+            this.Topic = topic;
         }
 
         public override string ToString()
