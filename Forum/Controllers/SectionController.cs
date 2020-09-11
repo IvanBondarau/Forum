@@ -21,24 +21,13 @@ namespace Forum.Controllers
         public IActionResult Index()
         {
             ViewData["Sections"] = _sectionService.FindAll();
-            ViewData["Test"] = "Test";
             return View();
         }
 
 
-        public string Details(int id)
+        public IActionResult Details(int id)
         {
-            return _sectionService.Read(id).ToString();
-        }
-
-        public string Details(string name)
-        {
-            Section searchResult = _sectionService.FindByName(name);
-            if (searchResult == null)
-            {
-                return "Not found";
-            }
-            return searchResult.ToString();
+            return View();
         }
 
         [HttpPost]

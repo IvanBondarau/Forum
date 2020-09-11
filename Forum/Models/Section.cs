@@ -13,12 +13,21 @@ namespace Forum.Models
         public string Description { get; set; }
         public IList<Topic> Topics { get; set; }
 
-        public Section(string name)
+        public Section(string name, string description = "")
         {
             Name = name;
+            Description = description;
             Topics = new List<Topic>();
         }
-        
+
+        public Section(int id, string name, string description = "")
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            Topics = new List<Topic>();
+        }
+
         public override string ToString()
             => JsonSerializer.Serialize(this);
 

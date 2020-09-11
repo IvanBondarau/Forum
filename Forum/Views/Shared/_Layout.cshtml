@@ -10,10 +10,12 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-
-    <nav class="uk-navbar-container" uk-navbar>
-        <a class="uk-navbar-item uk-logo" href="#">Forum</a>
-    </nav>
+    <div class="uk-section-primary uk-preserve-color">
+        <nav class="uk-navbar-container uk-navbar-transparent uk-light" uk-navbar>
+            <a class="uk-navbar-item uk-logo" href="#">Forum</a>
+        </nav>
+    </div>
+    
     <div class="uk-flex uk-flex-center">
         @RenderBody()
     </div>
