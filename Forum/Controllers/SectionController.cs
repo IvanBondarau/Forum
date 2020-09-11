@@ -18,9 +18,11 @@ namespace Forum.Controllers
             _sectionService = sectionService;
         }
 
-        public string Index()
+        public IActionResult Index()
         {
-            return String.Join("\n", _sectionService.FindAll());
+            ViewData["Sections"] = _sectionService.FindAll();
+            ViewData["Test"] = "Test";
+            return View();
         }
 
 

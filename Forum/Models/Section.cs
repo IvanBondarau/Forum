@@ -10,6 +10,7 @@ namespace Forum.Models
     public class Section: BaseModel
     {
         public string Name { get; set; }
+        public string Description { get; set; }
         public IList<Topic> Topics { get; set; }
 
         public Section(string name)

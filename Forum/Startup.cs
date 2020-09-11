@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Forum.Services;
 using Forum.Services.Implementations;
+using Forum.Services.Implementatios;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,7 @@ namespace Forum
         {
             services.AddControllersWithViews();
             services.AddSingleton<ITopicService, TopicService>();
+            services.AddSingleton<ISectionService, SectionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

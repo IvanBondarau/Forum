@@ -1,0 +1,18 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Index";
+}
+
+<div class="uk-flex uk-flex-column uk-background-default uk-width-3-4">
+    <h2 class="uk-text-bold uk-margin-top">Sections</h2>
+    @foreach (Section section in (List<Section>)ViewData["Sections"])
+    {
+        <div class="uk-card uk-card-default uk-margin-top">
+            <div class="uk-card-body">
+                <h3 class="uk-card-title">@Html.DisplayFor(item => section.Name)</h3>
+                <p>@Html.DisplayFor(item => section.</p>
+            </div>
+        </div>
+    }
+</div>
