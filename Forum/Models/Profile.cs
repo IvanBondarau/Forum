@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace Forum.Models
 {
-    public class Profile: BaseModel
+    public class Profile
     {
+        public int ProfileId { get; set; }
         public string Name { get; set; }
         public string ImagePath { get; set; }
         public string About { get; set; }
+
+        public Profile()
+        {
+
+        }
 
         public Profile(string name = null,
                string imagePath = null,
@@ -28,7 +34,7 @@ namespace Forum.Models
         public override bool Equals(object obj)
         {
             return obj is Profile profile &&
-                   Id == profile.Id &&
+                   ProfileId == profile.ProfileId &&
                    Name == profile.Name &&
                    ImagePath == profile.ImagePath &&
                    About == profile.About;
@@ -36,7 +42,7 @@ namespace Forum.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Name, ImagePath, About);
+            return HashCode.Combine(ProfileId, Name, ImagePath, About);
         }
     }
 }

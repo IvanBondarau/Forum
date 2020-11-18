@@ -1,31 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Forum.Models
 {
-    public class Topic: BaseModel
+    public class Topic
     {
+        public int TopicId { get; set; }
         public String Name { get; set; }
         public String Description { get; set; }
-        public User Author { get; set; }
+        
+        [DataType(DataType.DateTime)]
         public DateTime Created { get; set; }
-        public Section Section { get; set; }
-        public IList<Message> Messages { get; set; }
 
-        public Topic(string name = null, 
-                     string description = null, 
-                     User author = null,
-                     Section section = null)
+        public User Author { get; set; }
+
+        public ICollection<Label> Labels { get; set; }
+
+        public Topic()
         {
+
+        }
+
+        public Topic(string name = null,
+                     string description = null,
+                     User user = null)
+        {
+            Author = user;
             Name = name;
             Description = description;
-            Author = author;
-            Messages = new List<Message>();
             Created = DateTime.Now;
-            Section = section;
         }
 
         public override string ToString()
@@ -34,13 +39,13 @@ namespace Forum.Models
         public override bool Equals(object obj)
         {
             return obj is Topic topic &&
-                   Id == topic.Id &&
+                   TopicId == topic.TopicId &&
                    Name == topic.Name;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Name);
+            return HashCode.Combine(TopicId, Name);
         }
     }
 }

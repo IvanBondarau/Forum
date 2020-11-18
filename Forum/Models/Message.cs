@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace Forum.Models
 {
-    public class Message: BaseModel
+    public class Message
     {
+        public int MessageId { get; set; }
         public string Text { get; set; }
-        public User Author { get; set; }
         public DateTime Created { get; set; }
-
         public Topic Topic { get; set; }
+        public User Author { get; set; }
+
+        public Message()
+        {
+
+        }
 
         public Message(string text = null,
                        User author = null,
@@ -30,7 +35,7 @@ namespace Forum.Models
         public override bool Equals(object obj)
         {
             return obj is Message message &&
-                   Id == message.Id &&
+                   MessageId == message.MessageId &&
                    Text == message.Text &&
                    EqualityComparer<User>.Default.Equals(Author, message.Author) &&
                    Created == message.Created &&
@@ -39,7 +44,7 @@ namespace Forum.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Text, Author, Created, Topic);
+            return HashCode.Combine(MessageId, Text, Author, Created, Topic);
         }
     }
 }

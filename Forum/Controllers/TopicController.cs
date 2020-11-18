@@ -2,43 +2,86 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Forum.Models;
-using Forum.Services;
-using Forum.Services.Implementations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.Controllers
 {
     public class TopicController : Controller
     {
-        private readonly ITopicService _topicService;
-        
-        public TopicController(ITopicService topicService)
+        // GET: TopicController
+        public ActionResult Index()
         {
-            this._topicService = topicService;
-        }
-        
-        public string Index()
-        {
-            return String.Join("\n", _topicService.FindAll());
+            return View();
         }
 
-        
-
-        public string Details(string name)
+        // GET: TopicController/Details/5
+        public ActionResult Details(int id)
         {
-            Topic searchResult = _topicService.FindByName(name);
-            if (searchResult == null)
+            return View();
+        }
+
+        // GET: TopicController/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: TopicController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection collection)
+        {
+            try
             {
-                return "Not found";
+                return RedirectToAction(nameof(Index));
             }
-            return searchResult.ToString();
+            catch
+            {
+                return View();
+            }
         }
 
-        public string Filter(string sectionName)
+        // GET: TopicController/Edit/5
+        public ActionResult Edit(int id)
         {
-            Section section = new Section(sectionName);
-            return String.Join("\n", _topicService.FindBySection(section));
+            return View();
+        }
+
+        // POST: TopicController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: TopicController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
+
+        // POST: TopicController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

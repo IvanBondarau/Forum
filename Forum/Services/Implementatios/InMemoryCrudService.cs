@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Forum.Services.Implementatios
 {
-    public class InMemoryCrudService<T> : ICrudService<T, int> where T : BaseModel
+    public class InMemoryCrudService<T> : ICrudService<T, int> where T : Topic
     {
         protected List<T> _items;
 
@@ -24,20 +24,20 @@ namespace Forum.Services.Implementatios
         public T Read(int id)
         {
             return _items.First<T>(
-                (item) => item.Id == id
+                (item) => item.TopicId == id
             );
         }
 
         public void Update(T updatedItem)
         {
-            var oldItem = _items.First<T>(item => item.Id == updatedItem.Id);
+            var oldItem = _items.First<T>(item => item.TopicId == updatedItem.TopicId);
             _items.Remove(oldItem);
             _items.Add(updatedItem);
         }
 
         public void Delete(int id)
         {
-            var removedItem = _items.First<T>(item => item.Id == id);
+            var removedItem = _items.First<T>(item => item.TopicId == id);
             _items.Remove(removedItem);
         }
 

@@ -9,6 +9,5 @@ namespace Forum.Services
     public interface ITopicService : ICrudService<Topic, int>
     {
         Topic FindByName(string name);
-        ICollection<Topic> FindBySection(Section section);
     }
 }

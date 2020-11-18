@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace Forum.Models
 {
-    public class User: BaseModel
+    public class User
     {
+        public int UserId { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public Profile Profile { get; set; }
+
+        public User()
+        {
+
+        }
 
         public User(string username = null, 
                     string email = null, 
@@ -30,14 +36,14 @@ namespace Forum.Models
         public override bool Equals(object obj)
         {
             return obj is User user &&
-                   Id == user.Id &&
+                   UserId == user.UserId &&
                    Username == user.Username &&
                    Email == user.Email;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Username, Email);
+            return HashCode.Combine(UserId, Username, Email);
         }
     }
 }
