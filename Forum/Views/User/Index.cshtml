@@ -1,0 +1,69 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="uk-flex uk-flex-center uk-width-1-2">
+    <ul class="uk-padding-small uk-background-muted uk-width-expand uk-margin-small-top uk-width-1-1" uk-accordion="multiple: true">
+        <li class="uk-open">
+            <a href="#" class="uk-accordion-title">Account</a>
+            <div class="uk-accordion-content">
+                <form class="uk-form-horizontal uk-margin-small">
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text"><h5>Email</h5></label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="Some text..." value="test@test.com" disabled>
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="form-horizontal-text"><h5>Username</h5></label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="Some text..." value="test_user">
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <button type="submit" class="uk-button uk-button-primary">Change username</button>
+                        <button type="submit" class="uk-button uk-button-primary">Change password</button>
+                    </div>
+
+                </form>
+            </div>
+        </li>
+        <li class="uk-open">
+            <a href="#" class="uk-accordion-title">Profile</a>
+            <div class="uk-accordion-content">
+                <div class="uk-text-center">
+                    <img class="uk-border-circle" width="200" height="200" src="~/img/avatar1.png">
+                    <div class="uk-margin">
+                        <div uk-form-custom>
+                            <input type="file">
+                            <button class="uk-button uk-button-primary" type="button" tabindex="-1">Select</button>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <form class="uk-grid-small uk-margin-small-top" uk-grid>
+                    <div class="uk-width-1-2@s">
+                        <input class="uk-input" type="text" placeholder="Name">
+                    </div>
+                    <div class="uk-width-1-2@s">
+                        <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
+                            <label><input class="uk-radio" type="radio" checked> Male</label>
+                            <label><input class="uk-radio" type="radio"> Female</label>
+                            <label><input class="uk-radio" type="radio"> Other</label>
+                        </div>
+                    </div>
+                    <div class="uk-align-center">
+                        <button type="submit" class="uk-button uk-button-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
