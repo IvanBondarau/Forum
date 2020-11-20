@@ -1,4 +1,6 @@
 using Forum.Database;
+using Forum.Repositories;
+using Forum.Repositories.Implementations;
 using Forum.Services;
 using Forum.Services.Implementations;
 using Microsoft.AspNetCore.Builder;
@@ -26,7 +28,8 @@ namespace Forum
             services.AddDbContext<ForumDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("ForumApp"))
             );
-            services.AddSingleton<ITopicService, TopicService>();
+            services.AddScoped<ITopicRepository, TopicRepository>();
+            services.AddScoped<ITopicService, TopicService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -52,7 +55,7 @@ namespace Forum
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Topic}/{action=Index}/{id?}");
             });
         }
     }

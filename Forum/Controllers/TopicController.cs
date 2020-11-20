@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Forum.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,13 @@ namespace Forum.Controllers
 {
     public class TopicController : Controller
     {
+        private readonly ITopicService topicService;
+
+        public TopicController(ITopicService topicService)
+        {
+            this.topicService = topicService;
+        }
+
         // GET: TopicController
         public ActionResult Index()
         {

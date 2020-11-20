@@ -15,15 +15,28 @@
             <div class="uk-navbar-left">
                 <a class="uk-navbar-item uk-logo" href="/Home">Forum</a>
                 <ul class="uk-navbar-nav">
-                    <li><a class="uk-navbar-toggle" href="Topic">Search</a></li>
-                    <li><a class="uk-navbar-toggle" href="">My topics</a></li>
+                    <li>
+                        <a class="uk-navbar-toggle"
+                           asp-controller="Topic"
+                           asp-action="Index">
+                            Search
+                        </a>
+                    </li>
+                    <li>
+                        <a class="uk-navbar-toggle" 
+                           asp-controller="Topic"
+                           asp-action="Create">
+                            Create
+                        </a>
+                    </li>
                     <li><a class="uk-navbar-toggle" href="">Featured</a></li>
                 </ul>
             </div>
             <div class="uk-navbar-right">
                 <ul class="uk-iconnav">
                     <li>
-                        <a href="">
+                        <a asp-controller="User"
+                           asp-action="Index">
                             <span class="uk-icon uk-margin-small-right uk-icon-link" uk-icon="icon: user; ratio: 1.5"></span>
                         </a>
                     </li>

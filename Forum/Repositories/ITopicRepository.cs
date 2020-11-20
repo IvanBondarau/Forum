@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Forum.Services
+namespace Forum.Repositories
 {
-    public interface ITopicService : ICrudService<int, Topic>
+    public interface ITopicRepository: ICrudRepository<int, Topic>
     {
-        Topic FindByName(String name);
+        Topic FindByName(string name);
     }
 }

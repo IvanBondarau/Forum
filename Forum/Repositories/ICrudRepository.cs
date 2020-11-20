@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Forum.Services
+namespace Forum.Repositories
 {
-    public interface ICrudService<Key, Item>
+    public interface ICrudRepository<Key, Item>: IDisposable
     {
         Item Create(Item item);
         Item Read(Key key);

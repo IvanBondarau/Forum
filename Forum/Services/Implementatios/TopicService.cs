@@ -1,4 +1,5 @@
 ﻿using Forum.Models;
+using Forum.Repositories;
 using Forum.Services.Implementatios;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,24 +7,20 @@ using System.Linq;
 namespace Forum.Services.Implementations
 {
     public class TopicService 
-        : InMemoryCrudService<Topic>, ITopicService
+        : AbstractCrudService<int, Topic>, ITopicService
     {
 
-        public TopicService()
-            : base()
-        {
-            _items.Add(new Topic("Test 1", "Test topic 1"));
-            _items.Add(new Topic("Test 2", "Test topic 2"));
-            _items.Add(new Topic("Test 3", "Test topic 3"));
-        }
+        private readonly ITopicRepository topicRepository;
 
-      
+        public TopicService(ITopicRepository topicRepository)
+            : base(topicRepository)
+        {
+            this.topicRepository = topicRepository;
+        }
 
         public Topic FindByName(string name)
         {
-            return (from topic in _items
-                    where topic.Name.Equals(name)
-                    select topic).FirstOrDefault();
+            return this.topicRepository.FindByName(name);
         }
     }
 }

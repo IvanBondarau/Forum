@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace Forum.Exceptions
 {
-    public class EntityNotFoundException: SystemException
+    public class TopicNotFoundException : Exception
     {
-
+        public TopicNotFoundException(string message) : base(message)
+        {
+        }
     }
 }
