@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Forum.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    [Migration("20201116174834_Initial")]
-    partial class Initial
+    [Migration("20201122184233_UserProfileUpdate")]
+    partial class UserProfileUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -85,7 +85,13 @@ namespace Forum.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("ProfileId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Profile");
                 });
@@ -129,15 +135,13 @@ namespace Forum.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProfileId")
+                    b.Property<int>("ProfileId")
                         .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("ProfileId");
 
                     b.ToTable("User");
                 });
@@ -164,6 +168,17 @@ namespace Forum.Migrations
                     b.Navigation("Topic");
                 });
 
+            modelBuilder.Entity("Forum.Models.Profile", b =>
+                {
+                    b.HasOne("Forum.Models.User", "User")
+                        .WithOne("Profile")
+                        .HasForeignKey("Forum.Models.Profile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Forum.Models.Topic", b =>
                 {
                     b.HasOne("Forum.Models.User", "Author")
@@ -173,18 +188,14 @@ namespace Forum.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("Forum.Models.User", b =>
-                {
-                    b.HasOne("Forum.Models.Profile", "Profile")
-                        .WithMany()
-                        .HasForeignKey("ProfileId");
-
-                    b.Navigation("Profile");
-                });
-
             modelBuilder.Entity("Forum.Models.Topic", b =>
                 {
                     b.Navigation("Labels");
+                });
+
+            modelBuilder.Entity("Forum.Models.User", b =>
+                {
+                    b.Navigation("Profile");
                 });
 #pragma warning restore 612, 618
         }

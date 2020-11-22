@@ -3,6 +3,8 @@ using Forum.Repositories;
 using Forum.Repositories.Implementations;
 using Forum.Services;
 using Forum.Services.Implementations;
+using Forum.Services.Implementatios;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +31,17 @@ namespace Forum
                 options => options.UseSqlServer(Configuration.GetConnectionString("ForumApp"))
             );
             services.AddScoped<ITopicRepository, TopicRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProfileRepository, ProfileRepository>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITopicService, TopicService>();
+
+            // установка конфигурации подключения
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,7 +61,8 @@ namespace Forum
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();    
+            app.UseAuthorization();    
 
             app.UseEndpoints(endpoints =>
             {

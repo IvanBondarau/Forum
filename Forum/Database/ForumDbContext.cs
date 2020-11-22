@@ -10,6 +10,15 @@ namespace Forum.Database
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Profile)
+                .WithOne(p => p.User)
+                .HasForeignKey<Profile>(p => p.UserId);
+        }
+
         public DbSet<Label> Label { get; set; }
         public DbSet<Topic> Topic { get; set; }
         public DbSet<Message> Message { get; set; }

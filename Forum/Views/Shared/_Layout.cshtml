@@ -33,19 +33,31 @@
                 </ul>
             </div>
             <div class="uk-navbar-right">
-                <ul class="uk-iconnav">
-                    <li>
-                        <a asp-controller="User"
-                           asp-action="Index">
-                            <span class="uk-icon uk-margin-small-right uk-icon-link" uk-icon="icon: user; ratio: 1.5"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <span class="uk-icon uk-margin-small-right uk-icon-link" uk-icon="icon: sign-out; ratio: 1.5"></span>
-                        </a>
-                    </li>
-                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="uk-iconnav">
+                        <li>
+                            <a asp-controller="User"
+                               asp-action="Index">
+                                <span class="uk-icon uk-margin-small-right uk-icon-link" uk-icon="icon: user; ratio: 1.5"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <span class="uk-icon uk-margin-small-right uk-icon-link" uk-icon="icon: sign-out; ratio: 1.5"></span>
+                            </a>
+                        </li>
+                    </ul>
+                } else {
+                    <ul class="uk-iconnav">
+                        <li>
+                            <a asp-controller="Account"
+                               asp-action="Login">
+                                <span class="uk-icon uk-margin-small-right uk-icon-link" uk-icon="icon: sign-in; ratio: 1.5"></span>
+                            </a>
+                        </li>
+                    </ul>  
+                }
             </div>
         </nav>
     </div>

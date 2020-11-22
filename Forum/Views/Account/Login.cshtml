@@ -1,19 +1,21 @@
-﻿<div class="uk-flex uk-flex-center uk-width-1-1">
+﻿@model Forum.ViewModel.LoginViewModel
+
+<div class="uk-flex uk-flex-center uk-width-1-1">
     <div class="uk-background-muted uk-padding uk-margin-medium-top">
-        <form>
+        <form asp-action="Login" asp-controller="Account">
             <legend class="uk-legend">Log in</legend>
 
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: user"></span>
-                    <input class="uk-input" type="text" placeholder="Username or email">
+                    <input asp-for="Username" class="uk-input" type="text" placeholder="Username">
                 </div>
             </div>
 
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                    <input class="uk-input" type="text" placeholder="Password">
+                    <input asp-for="Password" class="uk-input" type="text" placeholder="Password">
                 </div>
             </div>
 
@@ -22,7 +24,7 @@
             </div>
 
             <div class="uk-margin uk-text-center uk-text-small">
-                <a href="#">Not registered? Create an account</a>
+                <a asp-controller="Account" asp-action="Register">Not registered? Create an account</a>
             </div>
 
         </form>
