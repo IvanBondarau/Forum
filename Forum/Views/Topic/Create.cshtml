@@ -1,19 +1,34 @@
-﻿<div class="uk-flex uk-flex-center uk-width-1-1">
+﻿@model Forum.ViewModel.TopicCreateViewModel
+
+<div class="uk-flex uk-flex-center uk-width-1-1">
     <div class="uk-background-muted uk-padding uk-margin-small-top">
-        <form>
+        <form asp-action="Create" asp-controller="Topic" asp-anti-forgery="true">
             <legend class="uk-legend">Create topic</legend>
 
             <div class="uk-margin">
-                <label for="name"  class="uk-form-label">Name</label>
+                <label for="name" class="uk-form-label">Name</label>
                 <div class="uk-form-controls">
-                    <input id="name" class="uk-input uk-form-width-large" type="text" placeholder="Name">
+                    <input asp-for="Name" id="name" class="uk-input uk-form-width-large" type="text" placeholder="Name">
                 </div>
+            </div>
+            <input class="labels-input" asp-for="Labels" type="hidden" />
+            <div class="uk-margin">
+                <div id="labels-list" class="uk-flex uk-flex-wrap-around">
+                    <div class="uk-label uk-margin-small-bottom uk-margin-small-right">Label1</div>
+                    <div class="uk-label uk-margin-small-bottom uk-margin-small-right">Label2</div>
+                </div>
+                <div class="uk-flex uk-flex-row">
+                    <input id="label-name-input" class="uk-input uk-margin-small-top uk-form-small" type="text" placeholder="Label">
+                    <button id="label-add" type="button" class="uk-button uk-margin-small-top uk-button-small uk-button-primary"
+                            onClick="AddLabel()">Add </button>
+                </div>
+
             </div>
 
             <div class="uk-margin">
                 <label for="description" class="uk-form-label">Description</label>
                 <div class="uk-form-controls">
-                    <textarea id="description" class="uk-textarea uk-form-width-large" rows="5" placeholder="Textarea"></textarea>
+                    <textarea asp-for="Description" id="description" class="uk-textarea uk-form-width-large" rows="5" placeholder="Textarea"></textarea>
                 </div>
             </div>
 

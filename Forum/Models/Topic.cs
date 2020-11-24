@@ -17,6 +17,7 @@ namespace Forum.Models
         public User Author { get; set; }
 
         public ICollection<Label> Labels { get; set; }
+        public ICollection<User> FeaturedUsers { get; set; }
 
         public Topic()
         {
@@ -25,11 +26,13 @@ namespace Forum.Models
 
         public Topic(string name = null,
                      string description = null,
+                     ICollection<Label> labels = null,
                      User user = null)
         {
             Author = user;
             Name = name;
             Description = description;
+            Labels = labels;
             Created = DateTime.Now;
         }
 

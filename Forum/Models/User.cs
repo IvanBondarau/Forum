@@ -14,6 +14,8 @@ namespace Forum.Models
         public string Password { get; set; }
         public Profile Profile { get; set; }
 
+        public ICollection<Topic> Featured { get; set; }
+
         public User()
         {
 

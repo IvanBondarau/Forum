@@ -17,6 +17,15 @@ namespace Forum.Database
                 .HasOne(u => u.Profile)
                 .WithOne(p => p.User)
                 .HasForeignKey<Profile>(p => p.UserId);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Featured)
+                .WithMany(t => t.FeaturedUsers)
+                .UsingEntity(j => j.ToTable("UserFeaturedTopics"));
+
+            modelBuilder.Entity<Topic>()
+                .HasOne(t => t.Author)
+                .WithMany();
         }
 
         public DbSet<Label> Label { get; set; }

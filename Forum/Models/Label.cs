@@ -10,9 +10,9 @@ namespace Forum.Models
         public int LabelId { get; set; }
         public string Name { get; set; }
 
-        public Label()
+        public Label(string Name)
         {
-
+            this.Name = Name;
         }
     }
 }
