@@ -32,8 +32,10 @@ namespace Forum
             );
             services.AddScoped<ITopicRepository, TopicRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<ITopicService, TopicService>();
 
             // установка конфигурации подключения

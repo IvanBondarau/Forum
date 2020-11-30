@@ -8,12 +8,17 @@ namespace Forum.ViewModel
 {
     public class TopicListViewModel
     {
-
+        public int PageNumber { get; set; }
+        public int TotalPages { get; set; }
         public ICollection<Topic> Topics { get; set; }
+       
 
-        public TopicListViewModel(ICollection<Topic> topics)
+        public TopicListViewModel(ICollection<Topic> topics, int pageNumber, int totalPages)
         {
+            PageNumber = pageNumber;
+            TotalPages = totalPages;
             Topics = topics;
+
         }
     }
 }

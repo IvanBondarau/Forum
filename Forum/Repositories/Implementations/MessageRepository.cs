@@ -2,6 +2,7 @@
 using Forum.Exceptions;
 using Forum.Models;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,52 +10,51 @@ using System.Threading.Tasks;
 
 namespace Forum.Repositories.Implementations
 {
-    public class UserRepository : IUserRepository
+    public class MessageRepository : IMessageRepository
     {
         private readonly ForumDbContext context;
 
-        public UserRepository(ForumDbContext forumDbContext)
+        public MessageRepository(ForumDbContext forumDbContext)
         {
             this.context = forumDbContext;
         }
 
-        public User Create(User item)
+        public Message Create(Message item)
         {
-            context.User.Add(item);
+            context.Message.Add(item);
             context.SaveChanges();
             return item;
         }
 
-        public User Read(int key)
+        public Message Read(int key)
         {
-            User result = context.User.Find(key);
+            Message result = context.Message.Find(key);
             if (result == null)
             {
-                throw new UserNotFoundException("User with id " + key + " not found");
+                throw new BusinessException(ExceptionCode.MESSAGE_NOT_FOUND);
             }
             return result;
         }
 
-        public void Update(User item)
+        public void Update(Message item)
         {
             context.Entry(item).State = EntityState.Modified;
-            context.SaveChanges();
         }
 
 
         public void Delete(int key)
         {
-            User result = context.User.Find(key);
+            Message result = context.Message.Find(key);
             if (result == null)
             {
-                throw new UserNotFoundException("User with id " + key + " not found");
+                throw new BusinessException(ExceptionCode.MESSAGE_NOT_FOUND);
             }
-            context.User.Remove(result);
+            context.Message.Remove(result);
         }
 
-        public ICollection<User> FindAll()
+        public ICollection<Message> FindAll()
         {
-            return context.User.Include(u => u.Profile).ToList();
+            return context.Message.Include(u => u.Author).ToList();
         }
 
         private bool disposed = false;
@@ -76,9 +76,18 @@ namespace Forum.Repositories.Implementations
             GC.SuppressFinalize(this);
         }
 
-        public User FindByUsername(string username)
+        public ICollection<Message> FindByTopicId(int topicId, int pageNumber, int pageSize)
         {
-            return context.User.Include(u => u.Profile).Include(u => u.Featured).FirstOrDefault(user => user.Username == username);
+            return context.Message.Include(m => m.Author).Include(m => m.Topic)
+                .OrderByDescending(m => m.Created)
+                .Where(m => m.Topic.TopicId.Equals(topicId))
+                .ToPagedList(pageNumber, pageSize)
+                .ToList();
+        }
+
+        public int Count()
+        {
+            return context.Message.Count();
         }
     }
 }

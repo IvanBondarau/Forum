@@ -38,6 +38,7 @@ namespace Forum.Repositories.Implementations
         public void Update(Profile item)
         {
             context.Entry(item).State = EntityState.Modified;
+            context.SaveChanges();
         }
 
 

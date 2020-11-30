@@ -54,5 +54,24 @@ namespace Forum.Services.Implementatios
             User searchResult = userRepository.FindByUsername(username);
             return searchResult != null ? searchResult : throw new UserNotFoundException("User with username " + username +" not found");
         }
+
+        public void Feature(string username, Topic topic)
+        {
+            User user = GetByUsername(username);
+            user.Featured.Add(topic);
+            userRepository.Update(user);
+        }
+
+        public void Like(string username, Message message)
+        {
+            User user = GetByUsername(username);
+            user.Likes.Add(message);
+            userRepository.Update(user);
+        }
+
+        public void UpdateProfile(Profile profile)
+        {
+            profileRepository.Update(profile);
+        }
     }
 }

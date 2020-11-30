@@ -14,9 +14,11 @@ namespace Forum.Models
         public Topic Topic { get; set; }
         public User Author { get; set; }
 
+        public List<User> Likes { get; set; }
+
         public Message()
         {
-
+            
         }
 
         public Message(string text = null,

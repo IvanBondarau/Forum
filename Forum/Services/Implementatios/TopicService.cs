@@ -32,11 +32,23 @@ namespace Forum.Services.Implementations
             return this.topicRepository.FindByName(name);
         }
 
-        public ICollection<Topic> FindTopics(string name, ICollection<Label> labels, int? pageNumber)
+        public ICollection<Topic> Find(string name, ICollection<Label> labels, int? pageNumber)
         { 
-            var cleanedName = name == null ? "" : name;
+            var cleanedName = name ?? "";
             var cleanedLabels = labels == null ? new List<Label>() : labels;
-            return this.topicRepository.FindTopics(cleanedName, cleanedLabels, pageNumber == null ? 1 : (int)pageNumber, ApplicationConstants.TOPIC_PAGE_SIZE);
+            return this.topicRepository.Find(cleanedName, cleanedLabels, pageNumber == null ? 1 : (int)pageNumber, ApplicationConstants.TOPIC_PAGE_SIZE);
+        }
+
+        public ICollection<Topic> FindFeatured(string username, int? pageNumber)
+        {
+            return this.topicRepository.FindFeatured(username, pageNumber == null ? 1 : (int)pageNumber, ApplicationConstants.TOPIC_PAGE_SIZE);
+        }
+
+        public int CountPages()
+        {
+            int cnt = this.topicRepository.Count();
+            int pageSize = ApplicationConstants.TOPIC_PAGE_SIZE;
+            return cnt / pageSize + (cnt % pageSize == 0 ? 0 : 1);
         }
     }
 }

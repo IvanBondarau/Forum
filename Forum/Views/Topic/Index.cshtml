@@ -47,8 +47,8 @@
                         <div class="uk-card uk-card-small uk-card-default uk-card-hover uk-margin-small-top">
                             <div class="uk-card-body">
                                 <h3 class="uk-card-title">
-                                    <a class="uk-link-heading" href="#">@topic.Name</a>
-                                    <a href="" class="uk-icon-link" uk-icon="star"></a>
+                                    <a href="/Topic/Details/@topic.TopicId" class="uk-link-heading">@topic.Name</a>
+                                    <a asp-controller="Topic" asp-action="Feature" asp-route-id="@topic.TopicId" class="uk-icon-link" uk-icon="star"></a>
                                 </h3>
                                 <p>@topic.Description</p>
                                 @if (topic.Author.Username.Equals(User.Identity.Name))

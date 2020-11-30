@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -13,8 +14,11 @@ namespace Forum.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public Profile Profile { get; set; }
+        [NotMapped]
+        public Boolean IsFeatured { get; set; }
 
         public ICollection<Topic> Featured { get; set; }
+        public ICollection<Message> Likes { get; set; }
 
         public User()
         {

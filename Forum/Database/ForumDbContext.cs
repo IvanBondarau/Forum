@@ -23,6 +23,16 @@ namespace Forum.Database
                 .WithMany(t => t.FeaturedUsers)
                 .UsingEntity(j => j.ToTable("UserFeaturedTopics"));
 
+            modelBuilder.Entity<User>()
+               .HasMany(u => u.Likes)
+               .WithMany(m => m.Likes)
+               .UsingEntity(j => j.ToTable("MessageLikes"));
+
+            modelBuilder.Entity<Message>()
+               .HasOne(m => m.Author)
+               .WithMany();
+               
+
             modelBuilder.Entity<Topic>()
                 .HasOne(t => t.Author)
                 .WithMany();

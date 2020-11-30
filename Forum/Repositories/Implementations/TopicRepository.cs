@@ -86,7 +86,7 @@ namespace Forum.Repositories.Implementations
             return context.Topic.Include(t => t.Author).Include(t => t.Labels).ToPagedList(pageNumber, pageSize).ToList<Topic>();
         }
 
-        public ICollection<Topic> FindTopics(string name, ICollection<Label> labels, int pageNumber, int pageSize)
+        public ICollection<Topic> Find(string name, ICollection<Label> labels, int pageNumber, int pageSize)
         {
 
             Regex regex = new Regex(".*" + name + ".*");
@@ -94,6 +94,19 @@ namespace Forum.Repositories.Implementations
                  .AsEnumerable()
                  .Where(t => regex.IsMatch(t.Name) && labels.All(label => t.Labels.Any(tlabel => tlabel.Name.Equals(label.Name))))
                  .ToPagedList(pageNumber, pageSize).ToList();
+        }
+
+        public ICollection<Topic> FindFeatured(string username, int pageNumber, int pageSize)
+        {
+            return context.Topic.Include(t => t.FeaturedUsers).Include(t => t.Labels)
+                .Where(t => t.FeaturedUsers.Any(u => u.Username.Equals(username)))
+                .ToPagedList(pageNumber, pageSize)
+                .ToList();
+        }
+
+        public int Count()
+        {
+            return context.Topic.Count();
         }
     }
 }

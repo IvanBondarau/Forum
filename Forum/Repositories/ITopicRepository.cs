@@ -8,8 +8,10 @@ namespace Forum.Repositories
 {
     public interface ITopicRepository: ICrudRepository<int, Topic>
     {
+        int Count();
         Topic FindByName(string name);
         ICollection<Topic> FindPage(int pageNumber, int pageSize);
-        ICollection<Topic> FindTopics(string name, ICollection<Label> labels, int pageNumber, int pageSize);
+        ICollection<Topic> Find(string name, ICollection<Label> labels, int pageNumber, int pageSize);
+        ICollection<Topic> FindFeatured(string username, int pageNumber, int pageSize);
     }
 }

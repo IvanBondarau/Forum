@@ -14,10 +14,12 @@ namespace Forum.Controllers
     {
         private readonly ITopicService topicService;
         private readonly IUserService userService;
+        private readonly IMessageService messageService;
 
-        public TopicController(ITopicService topicService, IUserService userService)
+        public TopicController(ITopicService topicService, IMessageService messageService, IUserService userService)
         {
             this.topicService = topicService;
+            this.messageService = messageService;
             this.userService = userService;
         }
 
@@ -26,19 +28,44 @@ namespace Forum.Controllers
         {
             page = page == null ? 1 : (int)page;
             ICollection<Topic> topics = topicService.FindPage(page);
-            return View(new TopicListViewModel(topics));
+            return View(new TopicListViewModel(topics, page ?? 1, topicService.CountPages()));
         }
 
         // GET: TopicController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int id, int? page)
         {
-            return View();
+            User user = userService.GetByUsername(User.Identity.Name);
+            Topic topic = topicService.Read(id);
+            ICollection<Message> messages = messageService.FindByTopicId(id, page);
+            return View(new MessageListViewModel(topic, messages, user, page ?? 1, messageService.CountPages()));
         }
 
         // GET: TopicController/Create
         public ActionResult Create()
         {
             return View();
+        }
+
+        public ActionResult Featured(int? page)
+        {
+            ICollection<Topic> topics = topicService.FindFeatured(User.Identity.Name, page);
+            return View("Index",new TopicListViewModel(topics, page ?? 1, topicService.CountPages()));
+        }
+
+        public ActionResult Feature(int id)
+        {
+            Topic topic = topicService.Read(id);
+            userService.Feature(User.Identity.Name, topic);
+            return RedirectToAction("Featured", "Topic");
+
+        }
+
+        public ActionResult Like(int id)
+        {
+            Message message = messageService.Read(id);
+            userService.Like(User.Identity.Name, message);
+            return RedirectToAction("Index", "Topic");
+
         }
 
         // POST: TopicController/Create
@@ -70,8 +97,8 @@ namespace Forum.Controllers
         {
             string name = Request.Query["name"];
             ICollection<Label> labels = ParseLabels(Request.Query["labels"]);
-            ICollection<Topic> searchResult = topicService.FindTopics(name, labels, page);
-            return View(new TopicListViewModel(searchResult));
+            ICollection<Topic> searchResult = topicService.Find(name, labels, page);
+            return View("Index", new TopicListViewModel(searchResult, page ?? 1, topicService.CountPages()));
         }
 
         // GET: TopicController/Edit/5

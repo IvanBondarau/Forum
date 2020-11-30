@@ -37,10 +37,14 @@
                 <div class="uk-text-center">
                     <img class="uk-border-circle" width="200" height="200" src="@Model.ImagePath">
                     <div class="uk-margin">
-                        <div uk-form-custom>
-                            <input type="file">
-                            <button class="uk-button uk-button-primary" type="button" tabindex="-1">Select</button>
-                        </div>
+                        <form enctype="multipart/form-data" asp-controller="User" asp-action="Upload">
+                            <div uk-form-custom>
+                                <input name="Image" id="Image" type="file">
+                                <button class="uk-button uk-button-primary" type="button" tabindex="-1">Select</button>
+                            </div>
+                            <button class="uk-button" type="submit">Save</button>
+                        </form>
+                        
                     </div>
                 </div>
                 <hr />
