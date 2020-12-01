@@ -5,6 +5,10 @@
     {
       "library": "uikit@3.5.7",
       "destination": "wwwroot/lib/uikit/"
+    },
+    {
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/jquery/"
     }
   ]
 }

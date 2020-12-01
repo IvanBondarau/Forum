@@ -29,5 +29,11 @@ namespace Forum.Controllers
 
             return RedirectToAction("Details", "Topic", new { id = messageCreateViewModel.TopicId });
         }
+
+        [HttpPost]
+        public void Like(int id)
+        {
+            messageService.Like(id, User.Identity.Name);
+        }
     }
 }

@@ -23,15 +23,17 @@
                         </a>
                     </li>
                     <li>
-                        <a class="uk-navbar-toggle" 
+                        <a class="uk-navbar-toggle"
                            asp-controller="Topic"
                            asp-action="Create">
                             Create
                         </a>
                     </li>
-                    <li><a class="uk-navbar-toggle" 
+                    <li>
+                        <a class="uk-navbar-toggle"
                            asp-controller="Topic"
-                           asp-action="Featured">Featured</a></li>
+                           asp-action="Featured">Featured</a>
+                    </li>
                 </ul>
             </div>
             <div class="uk-navbar-right">
@@ -45,12 +47,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a asp-controller="Account"
+                               asp-action="Logout">
                                 <span class="uk-icon uk-margin-small-right uk-icon-link" uk-icon="icon: sign-out; ratio: 1.5"></span>
                             </a>
                         </li>
                     </ul>
-                } else {
+                }
+                else
+                {
                     <ul class="uk-iconnav">
                         <li>
                             <a asp-controller="Account"
@@ -58,12 +63,12 @@
                                 <span class="uk-icon uk-margin-small-right uk-icon-link" uk-icon="icon: sign-in; ratio: 1.5"></span>
                             </a>
                         </li>
-                    </ul>  
+                    </ul>
                 }
             </div>
         </nav>
     </div>
-    
+
     <div class="uk-flex uk-flex-center">
         @RenderBody()
     </div>
@@ -71,7 +76,9 @@
     <!-- UIkit JS -->
     <script src="~/lib/uikit/js/uikit.min.js"></script>
     <script src="~/lib/uikit/js/uikit-icons.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 
+    <script src="~/jquery/jquery.min.js" asp-append-version="true"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

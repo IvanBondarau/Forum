@@ -43,5 +43,20 @@ namespace Forum.Services.Implementatios
 
             return messageRepository.FindByTopicId(topicId, page == null ? 1 : (int)page, ApplicationConstants.MESSAGE_PAGE_SIZE);
         }
+
+        public void Like(int messageId, string username)
+        {
+            User user = userRepository.FindByUsername(username);
+            Message message = messageRepository.Read(messageId);
+            if (message.Likes == null)
+            {
+                message.Likes = new List<User>();
+            }
+            if (!message.Likes.Contains(user))
+            {
+                message.Likes.Add(user);
+                messageRepository.Update(message);
+            }
+        }
     }
 }

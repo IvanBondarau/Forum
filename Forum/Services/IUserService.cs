@@ -14,5 +14,6 @@ namespace Forum.Services
         public void Feature(string username, Topic topic);
         public void Like(string username, Message message);
         public void UpdateProfile(Profile profile);
+        public void ChangeUsername(string oldUsername, string newUsername);
     }
 }

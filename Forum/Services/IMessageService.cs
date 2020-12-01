@@ -11,5 +11,6 @@ namespace Forum.Services
         ICollection<Message> FindByTopicId(int topicId, int? page);
         Message Create(int topicId, int authorId, string Text);
         public int CountPages();
+        public void Like(int messageId, string username);
     }
 }

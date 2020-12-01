@@ -7,7 +7,7 @@
         <li class="uk-open">
             <a href="#" class="uk-accordion-title">Account</a>
             <div class="uk-accordion-content">
-                <form class="uk-form-horizontal uk-margin-small">
+                <form asp-controller="User" asp-action="UpdateUsername" class="uk-form-horizontal uk-margin-small">
 
                     <div class="uk-margin">
                         <label class="uk-form-label" for="form-horizontal-text"><h5>Email</h5></label>
@@ -19,12 +19,12 @@
                     <div class="uk-margin">
                         <label class="uk-form-label" for="form-horizontal-text"><h5>Username</h5></label>
                         <div class="uk-form-controls">
-                            <input class="uk-input" id="form-horizontal-text" type="text" placeholder="Some text..." value="@Model.Username">
+                            <input class="uk-input" asp-for="Username" type="text" placeholder="Some text..." value="@Model.Username">
                         </div>
                     </div>
 
                     <div class="uk-margin">
-                        <button type="submit" class="uk-button uk-button-primary">Change username</button>
+                        <button type="button" class="uk-button uk-button-primary">Change username</button>
                         <button type="submit" class="uk-button uk-button-primary">Change password</button>
                     </div>
 
@@ -48,15 +48,21 @@
                     </div>
                 </div>
                 <hr />
-                <form class="uk-grid-small uk-margin-small-top" uk-grid>
+                <form asp-controller="User" asp-action="UpdateProfile" class="uk-grid-small uk-margin-small-top" uk-grid>
                     <div class="uk-width-1-1@s">
-                        <input class="uk-input" type="text" placeholder="Name" value="@Model.Name">
+                        <label for="name" class="uk-form-label">Name</label>
+                        <input asp-for="Name" class="uk-input" type="text" placeholder="Name" value="@Model.Name">
+                    </div>
+                    <div class="uk-width-1-1@s">
+                        <label for="name" class="uk-form-label">About</label>
+                        <textarea asp-for="About" rows="3" class="uk-textarea" type="text" placeholder="About" value="@Model.About"></textarea>
                     </div>
                     <div class="uk-align-center">
                         <button type="submit" class="uk-button uk-button-primary">Save</button>
                     </div>
                 </form>
             </div>
+            
         </li>
     </ul>
 </div>

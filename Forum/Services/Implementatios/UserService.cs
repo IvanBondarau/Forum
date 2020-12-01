@@ -73,5 +73,12 @@ namespace Forum.Services.Implementatios
         {
             profileRepository.Update(profile);
         }
+
+        public void ChangeUsername(string oldUsername, string newUsername)
+        {
+            User user = GetByUsername(oldUsername);
+            user.Username = newUsername;
+            userRepository.Update(user);
+        }
     }
 }

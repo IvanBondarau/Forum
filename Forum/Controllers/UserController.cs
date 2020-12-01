@@ -9,6 +9,7 @@ using Forum.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.Controllers
@@ -32,11 +33,6 @@ namespace Forum.Controllers
             User user = userService.GetByUsername(username);
 
             return View(new UserViewModel(user));
-        }
-
-        public IActionResult Details(int id)
-        {
-            return View();
         }
 
         [HttpPost]
@@ -66,6 +62,32 @@ namespace Forum.Controllers
             return RedirectToAction("Index", "User");
 
         }
+
+        [HttpPost]
+        public IActionResult UpdateProfile(UserViewModel userView)
+        {
+            User user = userService.GetByUsername(User.Identity.Name);
+            user.Profile.Name = userView.Name;
+            user.Profile.About = userView.About;
+            userService.Update(user);
+
+            return RedirectToAction("Index", "User");
+        }
+
+        [HttpPost]
+        public IActionResult UpdateUsername(UserViewModel userView)
+        {
+            userService.ChangeUsername(User.Identity.Name, userView.Username);
+
+            return RedirectToAction("Logout", "Account");
+        }
+
+        public IActionResult Details(int id)
+        {
+            User user = userService.Read(id);
+            return View(new UserViewModel(user));
+        }
+
 
 
     }

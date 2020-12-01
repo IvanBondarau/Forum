@@ -51,3 +51,19 @@ function SendImage() {
         timeout: 60000
     });
 }
+
+function LikeMessage(messageId) {
+    console.log("LLELELE");
+
+    $.ajax({
+        type: 'POST',
+        url: '/Message/Like/' + messageId,
+        data: {},
+        contentType: "application/json; charset=utf-8",
+        dataType: "json", 
+        success: function (result) {
+            alert(result);
+        },  
+
+    })
+}

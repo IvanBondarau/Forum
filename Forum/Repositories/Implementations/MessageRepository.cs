@@ -28,7 +28,7 @@ namespace Forum.Repositories.Implementations
 
         public Message Read(int key)
         {
-            Message result = context.Message.Find(key);
+            Message result = context.Message.Include(m => m.Likes).First(m => m.MessageId == key);
             if (result == null)
             {
                 throw new BusinessException(ExceptionCode.MESSAGE_NOT_FOUND);
@@ -39,6 +39,7 @@ namespace Forum.Repositories.Implementations
         public void Update(Message item)
         {
             context.Entry(item).State = EntityState.Modified;
+            context.SaveChanges();
         }
 
 
@@ -54,7 +55,7 @@ namespace Forum.Repositories.Implementations
 
         public ICollection<Message> FindAll()
         {
-            return context.Message.Include(u => u.Author).ToList();
+            return context.Message.Include(m => m.Author).Include(m => m.Likes).ToList();
         }
 
         private bool disposed = false;
@@ -78,7 +79,9 @@ namespace Forum.Repositories.Implementations
 
         public ICollection<Message> FindByTopicId(int topicId, int pageNumber, int pageSize)
         {
-            return context.Message.Include(m => m.Author).Include(m => m.Topic)
+            return context.Message.Include(m => m.Author)
+                .Include(m => m.Topic)
+                .Include(m => m.Likes)
                 .OrderByDescending(m => m.Created)
                 .Where(m => m.Topic.TopicId.Equals(topicId))
                 .ToPagedList(pageNumber, pageSize)

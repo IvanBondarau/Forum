@@ -27,7 +27,7 @@ namespace Forum.Repositories.Implementations
 
         public User Read(int key)
         {
-            User result = context.User.Find(key);
+            User result = context.User.Include(u => u.Profile).First(u => u.UserId == key);
             if (result == null)
             {
                 throw new UserNotFoundException("User with id " + key + " not found");
