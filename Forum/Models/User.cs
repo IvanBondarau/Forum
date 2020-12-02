@@ -17,6 +17,9 @@ namespace Forum.Models
         [NotMapped]
         public Boolean IsFeatured { get; set; }
 
+        public bool Banned { get; set; } = false;
+
+        public ICollection<Role> Roles { get; set; }
         public ICollection<Topic> Featured { get; set; }
         public ICollection<Message> Likes { get; set; }
 

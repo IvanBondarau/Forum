@@ -27,7 +27,7 @@ namespace Forum.Repositories.Implementations
 
         public User Read(int key)
         {
-            User result = context.User.Include(u => u.Profile).First(u => u.UserId == key);
+            User result = context.User.Include(u => u.Profile).Include(u => u.Roles).First(u => u.UserId == key);
             if (result == null)
             {
                 throw new UserNotFoundException("User with id " + key + " not found");
@@ -78,7 +78,11 @@ namespace Forum.Repositories.Implementations
 
         public User FindByUsername(string username)
         {
-            return context.User.Include(u => u.Profile).Include(u => u.Featured).FirstOrDefault(user => user.Username == username);
+            return context.User
+                .Include(u => u.Profile)
+                .Include(u => u.Roles)
+                .Include(u => u.Featured)
+                .FirstOrDefault(user => user.Username == username);
         }
     }
 }

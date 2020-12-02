@@ -5,9 +5,18 @@
         <div class="uk-card uk-card-primary uk-width-3-5 uk-margin-small-top uk-height-large">
             <div class="uk-card-header">
                 <div class="uk-grid-small uk-flex-middle" uk-grid>
-                    <div class="uk-width-expand">
+                    <div class="uk-width-auto">
                         <h3 class="uk-card-title uk-margin-remove-bottom">@Model.Topic.Name</h3>
                         <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">@Model.Topic.Created.ToString("dd.MM.yyyy HH:mm")</time></p>
+                    </div>
+                    <div class="uk-width-expand uk-flex uk-flex-right">
+                        @if (User.IsInRole("Moderator"))
+                        {
+                        <form asp-action="Delete" asp-controller="Topic" asp-route-id="@Model.Topic.TopicId">
+                            <button type="submit" class="uk-icon-button" uk-icon="trash"></button>
+                        </form>
+                        }
+
                     </div>
                 </div>
             </div>
@@ -49,9 +58,16 @@
                             <div class="uk-width-auto">
                                 <img class="uk-border-circle" width="40" height="40" src="@message.Author.Profile.ImagePath">
                             </div>
-                            <div class="uk-width-expand">
+                            <div class="uk-width-auto">
                                 <h5 class="uk-card-title uk-margin-remove-bottom"><a class="uk-link-heading" href="/User/Details/@message.Author.UserId">@message.Author.Profile.Name</a></h5>
                                 <p class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">@message.Created.ToString("dd.MM.yyyy HH:mm")</time></p>
+                            </div>
+                            <div class="uk-width-expand uk-flex uk-flex-right">
+                                @if (User.IsInRole("Moderator"))
+                                {
+                                    <button id="remove-message-button" type="button" onclick="DeleteMessage(@message.MessageId)" class="uk-icon-button" uk-icon="trash"></button>
+                                }
+
                             </div>
                         </div>
                     </div>

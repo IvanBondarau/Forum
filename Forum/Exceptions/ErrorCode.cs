@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Forum.Exceptions
 {
-    public enum ExceptionCode
+    public enum ErrorCode
     {
-        MESSAGE_NOT_FOUND 
+        MESSAGE_NOT_FOUND,
+        USER_IS_BANNED
     }
 }

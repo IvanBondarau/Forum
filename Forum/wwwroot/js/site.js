@@ -53,17 +53,35 @@ function SendImage() {
 }
 
 function LikeMessage(messageId) {
-    console.log("LLELELE");
+    
 
     $.ajax({
         type: 'POST',
         url: '/Message/Like/' + messageId,
         data: {},
         contentType: "application/json; charset=utf-8",
-        dataType: "json", 
-        success: function (result) {
+        dataType: "json",
+        complete: function (result) {
             alert(result);
         },  
 
     })
 }
+
+function DeleteMessage(messageId) {
+    
+
+    $.ajax({
+        type: 'DELETE',
+        url: '/Message/Delete/' + messageId,
+        data: {},
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        complete: function (result) {
+            location.reload()
+        },
+        
+
+    })
+}
+

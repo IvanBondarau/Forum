@@ -53,11 +53,22 @@ namespace Forum.Controllers
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Username)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Username),
+                new Claim(ClaimTypes.Name, user.Username)
             };
+
+            AddRoles(claims, user);
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             
             await HttpContext.SignInAsync( CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+        }
+
+        private void AddRoles(List<Claim> claims, User user)
+        {
+            foreach (var role in user.Roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role.Name));
+            }
         }
 
         public IActionResult LogOut()
@@ -65,6 +76,33 @@ namespace Forum.Controllers
             HttpContext.SignOutAsync();
 
             return RedirectToAction("Login");
+        }
+
+
+        public IActionResult MakeModerator(int id)
+        {
+            userService.MakeModerator(id);
+            return RedirectToAction("Details", "User", new { id });
+        }
+
+        public IActionResult RemoveModerator(int id)
+        {
+            userService.RemoveModerator(id);
+            return RedirectToAction("Details", "User", new { id });
+        }
+
+
+        public IActionResult Ban(int id)
+        {
+            userService.Ban(id);
+            return RedirectToAction("Details", "User", new { id });
+        }
+
+
+        public IActionResult Unban(int id)
+        {
+            userService.Unban(id);
+            return RedirectToAction("Details", "User", new { id });
         }
     }
 }

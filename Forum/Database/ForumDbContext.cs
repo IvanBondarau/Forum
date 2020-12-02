@@ -28,6 +28,11 @@ namespace Forum.Database
                .WithMany(m => m.Likes)
                .UsingEntity(j => j.ToTable("MessageLikes"));
 
+            modelBuilder.Entity<User>()
+               .HasMany(u => u.Roles)
+               .WithMany(r => r.Users)
+               .UsingEntity(j => j.ToTable("UserRoles"));
+
             modelBuilder.Entity<Message>()
                .HasOne(m => m.Author)
                .WithMany();
@@ -36,6 +41,14 @@ namespace Forum.Database
             modelBuilder.Entity<Topic>()
                 .HasOne(t => t.Author)
                 .WithMany();
+            modelBuilder.Entity<Topic>()
+                .HasMany(t => t.Labels)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Topic)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         public DbSet<Label> Label { get; set; }
@@ -43,5 +56,6 @@ namespace Forum.Database
         public DbSet<Message> Message { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Profile> Profile { get; set; }
+        public DbSet<Role> Role { get; set; }
     }
 }

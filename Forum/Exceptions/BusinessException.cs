@@ -7,9 +7,9 @@ namespace Forum.Exceptions
 {
     public class BusinessException: Exception
     {
-        public readonly ExceptionCode Code;
+        public readonly ErrorCode Code;
 
-        public BusinessException(ExceptionCode code)
+        public BusinessException(ErrorCode code)
         {
             Code = code;
         }

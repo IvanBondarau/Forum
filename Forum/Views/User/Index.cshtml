@@ -44,8 +44,15 @@
                             </div>
                             <button class="uk-button" type="submit">Save</button>
                         </form>
-                        
+
                     </div>
+                </div>
+                <hr />
+                <div class="uk-flex uk-flex-wrap-reverse">
+                    @foreach (var role in Model.Roles)
+                    {
+                        <div class="uk-label uk-margin-small-right uk-margin-small-bottom">@role</div>
+                    }
                 </div>
                 <hr />
                 <form asp-controller="User" asp-action="UpdateProfile" class="uk-grid-small uk-margin-small-top" uk-grid>
@@ -64,6 +71,7 @@
             </div>
             
         </li>
+
     </ul>
 </div>
 

@@ -10,6 +10,14 @@
                     <img class="uk-border-circle" width="200" height="200" src="@Model.ImagePath" />
                 </div>
                 <hr />
+                <div class="uk-flex uk-flex-wrap-reverse">
+                    @foreach (var role in Model.Roles)
+                    {
+                        <div class="uk-label uk-margin-small-right uk-margin-small-bottom">@role</div>
+                    }
+                    
+                </div>
+                <hr />
                 <form asp-controller="User" asp-action="UpdateProfile" class="uk-grid-small uk-margin-small-top" uk-grid>
                     <div class="uk-width-1-1@s">
                         <label for="name" class="uk-form-label">Name</label>
@@ -23,7 +31,46 @@
             </div>
 
         </li>
-    </ul>
+
+        <li class="uk-open">
+            <a href="#" class="uk-accordion-title">Actions</a>
+            
+            @if (User.IsInRole("Admin") && !Model.Roles.Contains("Admin"))
+            {
+                if (Model.Roles.Contains("Moderator"))
+                {
+                    <form asp-controller="Account" asp-action="RemoveModerator" asp-route-id="@Model.UserId">
+                        <button type="submit" class="uk-button uk-button-primary">Remove moderator</button>
+                    </form>
+                }
+                else
+                {
+                    <form asp-controller="Account" asp-action="MakeModerator" asp-route-id="@Model.UserId">
+                        <button type="submit" class="uk-button uk-button-primary">Make a moderator</button>
+                    </form>
+                }
+
+            }
+            <div class="uk-margin-top">
+                @if (User.IsInRole("Moderator") && !Model.Roles.Contains("Moderator"))
+                {
+                    if (Model.Banned)
+                    {
+                        <form asp-controller="Account" asp-action="Unban" asp-route-id="@Model.UserId">
+                            <button type="submit" class="uk-button uk-button-primary">Unban</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form asp-controller="Account" asp-action="Ban" asp-route-id="@Model.UserId">
+                            <button type="submit" class="uk-button uk-button-primary">Ban</button>
+                        </form>
+                    }
+                }
+            </div>
+        </li>
+        
+        </ul>
 </div>
 
 

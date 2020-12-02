@@ -122,26 +122,13 @@ namespace Forum.Controllers
             }
         }
 
-        // GET: TopicController/Delete/5
-        public ActionResult Delete(int id)
+        [HttpPost]
+        public IActionResult Delete(int id)
         {
-            return View();
+            topicService.Delete(id);
+            return RedirectToAction("Index", "Topic");
         }
 
-        // POST: TopicController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         private ICollection<Label> ParseLabels(string labelString)
         {

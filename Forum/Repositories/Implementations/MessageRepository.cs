@@ -31,7 +31,7 @@ namespace Forum.Repositories.Implementations
             Message result = context.Message.Include(m => m.Likes).First(m => m.MessageId == key);
             if (result == null)
             {
-                throw new BusinessException(ExceptionCode.MESSAGE_NOT_FOUND);
+                throw new BusinessException(ErrorCode.MESSAGE_NOT_FOUND);
             }
             return result;
         }
@@ -48,9 +48,10 @@ namespace Forum.Repositories.Implementations
             Message result = context.Message.Find(key);
             if (result == null)
             {
-                throw new BusinessException(ExceptionCode.MESSAGE_NOT_FOUND);
+                throw new BusinessException(ErrorCode.MESSAGE_NOT_FOUND);
             }
             context.Message.Remove(result);
+            context.SaveChanges();
         }
 
         public ICollection<Message> FindAll()
@@ -79,7 +80,9 @@ namespace Forum.Repositories.Implementations
 
         public ICollection<Message> FindByTopicId(int topicId, int pageNumber, int pageSize)
         {
-            return context.Message.Include(m => m.Author)
+            return context.Message
+                .Include(m => m.Author)
+                .ThenInclude(u => u.Profile)
                 .Include(m => m.Topic)
                 .Include(m => m.Likes)
                 .OrderByDescending(m => m.Created)

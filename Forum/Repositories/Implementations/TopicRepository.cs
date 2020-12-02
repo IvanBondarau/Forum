@@ -50,6 +50,7 @@ namespace Forum.Repositories.Implementations
                 throw new TopicNotFoundException("Topic with id " + key + " not found");
             }
             context.Topic.Remove(result);
+            context.SaveChanges();
         }
 
         public ICollection<Topic> FindAll()
@@ -98,8 +99,11 @@ namespace Forum.Repositories.Implementations
 
         public ICollection<Topic> FindFeatured(string username, int pageNumber, int pageSize)
         {
-            return context.Topic.Include(t => t.FeaturedUsers).Include(t => t.Labels)
+            return context.Topic
+                .Include(t => t.FeaturedUsers)
+                .Include(t => t.Labels)
                 .Where(t => t.FeaturedUsers.Any(u => u.Username.Equals(username)))
+                .Where(t => !t.Author.Banned)
                 .ToPagedList(pageNumber, pageSize)
                 .ToList();
         }

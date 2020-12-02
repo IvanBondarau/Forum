@@ -15,5 +15,9 @@ namespace Forum.Services
         public void Like(string username, Message message);
         public void UpdateProfile(Profile profile);
         public void ChangeUsername(string oldUsername, string newUsername);
+        public void MakeModerator(int userId);
+        public void RemoveModerator(int userId);
+        public void Ban(int userId);
+        public void Unban(int userId);
     }
 }

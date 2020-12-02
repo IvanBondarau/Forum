@@ -35,5 +35,11 @@ namespace Forum.Controllers
         {
             messageService.Like(id, User.Identity.Name);
         }
+
+        [HttpDelete]
+        public void Delete(int id)
+        {
+            messageService.Delete(id);
+        }
     }
 }

@@ -17,12 +17,14 @@ namespace Forum.Services.Implementatios
     {
         private readonly IUserRepository userRepository;
         private readonly IProfileRepository profileRepository;
+        private readonly IRoleRepository roleRepository;
 
-        public UserService(IUserRepository userRepository, IProfileRepository profileRepository)
+        public UserService(IUserRepository userRepository, IProfileRepository profileRepository, IRoleRepository roleRepository)
               : base(userRepository)
         {
             this.userRepository = userRepository;
             this.profileRepository = profileRepository;
+            this.roleRepository = roleRepository;
         }
 
         public User CreateUser(string username, string email, string password)
@@ -30,6 +32,7 @@ namespace Forum.Services.Implementatios
             
             Profile profile = new Profile(name: username, imagePath: ApplicationConstants.DEFAULT_IMAGE_PATH);
             User user = new User(username, email, password, profile);
+            user.Roles = new List<Role> { roleRepository.FindByName(ApplicationConstants.USER_ROLE_NAME) };
             profile.User = user;
             return userRepository.Create(user);
 
@@ -41,6 +44,10 @@ namespace Forum.Services.Implementatios
             User user = userRepository.FindByUsername(username);
             if (user != null && user.Password.Equals(password))
             {
+                if (user.Banned)
+                {
+                    throw new BusinessException(ErrorCode.USER_IS_BANNED);
+                }
                 return user;
             } 
             else
@@ -78,6 +85,34 @@ namespace Forum.Services.Implementatios
         {
             User user = GetByUsername(oldUsername);
             user.Username = newUsername;
+            userRepository.Update(user);
+        }
+
+        public void MakeModerator(int userId)
+        {
+            User user = userRepository.Read(userId);
+            user.Roles.Add(roleRepository.FindByName(ApplicationConstants.MODERATOR_ROLE_NAME));
+            userRepository.Update(user);
+        }
+
+        public void RemoveModerator(int userId)
+        {
+            User user = userRepository.Read(userId);
+            user.Roles.Remove(roleRepository.FindByName(ApplicationConstants.MODERATOR_ROLE_NAME));
+            userRepository.Update(user);
+        }
+
+        public void Ban(int userId)
+        {
+            User user = userRepository.Read(userId);
+            user.Banned = true;
+            userRepository.Update(user);
+        }
+
+        public void Unban(int userId)
+        {
+            User user = userRepository.Read(userId);
+            user.Banned = false;
             userRepository.Update(user);
         }
     }
