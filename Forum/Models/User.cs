@@ -19,6 +19,9 @@ namespace Forum.Models
 
         public bool Banned { get; set; } = false;
 
+        public bool Verified { get; set; } = false;
+        public string VerificationString { get; set; }
+
         public ICollection<Role> Roles { get; set; }
         public ICollection<Topic> Featured { get; set; }
         public ICollection<Message> Likes { get; set; }

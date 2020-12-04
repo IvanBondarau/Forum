@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Forum.Hubs;
 using Forum.Models;
 using Forum.Services;
 using Forum.ViewModel;
@@ -82,7 +83,7 @@ namespace Forum.Controllers
                 currentUser
             );
 
-            topicService.Create(topic);
+            Topic created = topicService.Create(topic);
 
             return RedirectToAction("Index");
         }

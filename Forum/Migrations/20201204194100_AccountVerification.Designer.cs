@@ -4,14 +4,16 @@ using Forum.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Forum.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ForumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201204194100_AccountVerification")]
+    partial class AccountVerification
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,7 +159,7 @@ namespace Forum.Migrations
                     b.Property<string>("VerificationString")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Verified")
+                    b.Property<bool>("Virified")
                         .HasColumnType("bit");
 
                     b.HasKey("UserId");

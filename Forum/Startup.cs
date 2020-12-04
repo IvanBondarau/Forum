@@ -1,4 +1,5 @@
 using Forum.Database;
+using Forum.Hubs;
 using Forum.Repositories;
 using Forum.Repositories.Implementations;
 using Forum.Services;
@@ -27,6 +28,7 @@ namespace Forum
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSignalR();
             services.AddDbContext<ForumDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("ForumApp"))
             );
@@ -38,6 +40,7 @@ namespace Forum
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<IMailService, MailService>();
 
             // установка конфигурации подключения
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -72,6 +75,8 @@ namespace Forum
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Topic}/{action=Index}/{id?}");
+                endpoints.MapHub<TopicHub>("/topichub");
+
             });
         }
     }

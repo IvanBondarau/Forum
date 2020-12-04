@@ -1,5 +1,9 @@
 ﻿@model Forum.ViewModel.MessageListViewModel
 
+@section Scripts {
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/topic.js"></script>
+}
 <div uk-grid class="uk-width-expand">
     <div class="uk-width-1-3 uk-flex uk-flex-right">
         <div class="uk-card uk-card-primary uk-width-3-5 uk-margin-small-top uk-height-large">
@@ -12,9 +16,9 @@
                     <div class="uk-width-expand uk-flex uk-flex-right">
                         @if (User.IsInRole("Moderator"))
                         {
-                        <form asp-action="Delete" asp-controller="Topic" asp-route-id="@Model.Topic.TopicId">
-                            <button type="submit" class="uk-icon-button" uk-icon="trash"></button>
-                        </form>
+                            <form asp-action="Delete" asp-controller="Topic" asp-route-id="@Model.Topic.TopicId">
+                                <button type="submit" class="uk-icon-button" uk-icon="trash"></button>
+                            </form>
                         }
 
                     </div>
@@ -26,9 +30,10 @@
         </div>
     </div>
     <div class="uk-width-2-3" uk-grid>
-        
+
         <div class="uk-width-2-3 uk-margin-small-top uk-flex uk-flex-column">
             <div class="uk-background-muted uk-padding-small">
+
                 <ul uk-accordion>
                     <li class="uk-close">
 
@@ -37,8 +42,8 @@
                             <form asp-controller="Message" asp-action="Create">
                                 <fieldset class="uk-fieldset">
                                     <legend class="uk-legend">Message</legend>
-                                    <input type="hidden" value="@Model.Topic.TopicId" name="TopicId" id="TopicId"/>
-                                    <input type="hidden" value="@Model.User.UserId" name="AuthorId" id="AuthorId"/>
+                                    <input type="hidden" value="@Model.Topic.TopicId" name="TopicId" id="TopicId" />
+                                    <input type="hidden" value="@Model.User.UserId" name="AuthorId" id="AuthorId" />
                                     <div class="uk-margin">
                                         <textarea name="Text" id="Text" class="uk-textarea uk-form-width-large" rows="5" placeholder="Write your message"></textarea>
                                     </div>
@@ -103,8 +108,15 @@
 
 
         </div>
-        
+        <div class="uk-width-1-3 uk-flex uk-flex-row-reverse">
+            <div id="refreshPageWarning" class="uk-margin-auto uk-margin-small-top uk-text-warning">
+
+            </div>
+        </div>
+
+
     </div>
-        
-    
+
+
 </div>
+

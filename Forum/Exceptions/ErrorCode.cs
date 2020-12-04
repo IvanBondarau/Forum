@@ -8,6 +8,8 @@ namespace Forum.Exceptions
     public enum ErrorCode
     {
         MESSAGE_NOT_FOUND,
-        USER_IS_BANNED
+        USER_IS_BANNED,
+        ACCOUNT_NOT_VERIFIED,
+        INVALID_VERIFICATION_STRING
     }
 }

@@ -15,16 +15,23 @@ namespace Forum.Services.Implementatios
 
     public class UserService : AbstractCrudService<int, User>, IUserService
     {
+        private const string BASE_URL = "https://localhost:44399";
+
         private readonly IUserRepository userRepository;
         private readonly IProfileRepository profileRepository;
         private readonly IRoleRepository roleRepository;
+        private readonly IMailService mailService;
 
-        public UserService(IUserRepository userRepository, IProfileRepository profileRepository, IRoleRepository roleRepository)
+        public UserService(IUserRepository userRepository, 
+                           IProfileRepository profileRepository, 
+                           IRoleRepository roleRepository,
+                           IMailService mailService)
               : base(userRepository)
         {
             this.userRepository = userRepository;
             this.profileRepository = profileRepository;
             this.roleRepository = roleRepository;
+            this.mailService = mailService;
         }
 
         public User CreateUser(string username, string email, string password)
@@ -32,10 +39,13 @@ namespace Forum.Services.Implementatios
             
             Profile profile = new Profile(name: username, imagePath: ApplicationConstants.DEFAULT_IMAGE_PATH);
             User user = new User(username, email, password, profile);
+            user.VerificationString = UtilsService.GenerateRandomVerificationString();
             user.Roles = new List<Role> { roleRepository.FindByName(ApplicationConstants.USER_ROLE_NAME) };
             profile.User = user;
-            return userRepository.Create(user);
-
+            
+            user = userRepository.Create(user);
+            mailService.SendVerificationMail(user.Email, GenerateVerificationUrl(user.UserId, user.VerificationString));
+            return user;
 
         }
 
@@ -47,6 +57,9 @@ namespace Forum.Services.Implementatios
                 if (user.Banned)
                 {
                     throw new BusinessException(ErrorCode.USER_IS_BANNED);
+                } else if (!user.Verified)
+                {
+                    throw new BusinessException(ErrorCode.ACCOUNT_NOT_VERIFIED);
                 }
                 return user;
             } 
@@ -114,6 +127,27 @@ namespace Forum.Services.Implementatios
             User user = userRepository.Read(userId);
             user.Banned = false;
             userRepository.Update(user);
+        }
+
+        public User Verify(int userId, string verificationString)
+        {
+            User user = userRepository.Read(userId);
+            if (user.VerificationString == verificationString)
+            {
+                user.Verified = true;
+                user.VerificationString = "";
+                userRepository.Update(user);
+                return user;
+            } else
+            {
+                throw new BusinessException(ErrorCode.INVALID_VERIFICATION_STRING);
+            }
+        }
+
+        private string GenerateVerificationUrl(int accountId, string verificationString)
+        {
+
+            return BASE_URL + "/Account/Verify/" + accountId + "?verificationString=" + verificationString;
         }
     }
 }

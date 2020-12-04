@@ -49,6 +49,13 @@ namespace Forum.Controllers
             return RedirectToAction("Index", "User");
         }
 
+        public async Task<IActionResult> Verify(int id, string verificationString)
+        {
+            User user = userService.Verify(id, verificationString);
+            await Authenticate(user);
+            return RedirectToAction("Index", "User");
+        }
+
         private async Task Authenticate(User user)
         {
             var claims = new List<Claim>

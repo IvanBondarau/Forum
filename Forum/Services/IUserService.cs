@@ -19,5 +19,6 @@ namespace Forum.Services
         public void RemoveModerator(int userId);
         public void Ban(int userId);
         public void Unban(int userId);
+        public User Verify(int userId, string verificationString);
     }
 }
