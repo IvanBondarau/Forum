@@ -14,6 +14,8 @@
         <nav class="uk-navbar-container" uk-navbar>
             <div class="uk-navbar-left">
                 <a class="uk-navbar-item uk-logo" href="/Home">Forum</a>
+                @if (User.Identity.IsAuthenticated)
+                {
                 <ul class="uk-navbar-nav">
                     <li>
                         <a class="uk-navbar-toggle"
@@ -35,11 +37,19 @@
                            asp-action="Featured">Featured</a>
                     </li>
                 </ul>
+                }
             </div>
             <div class="uk-navbar-right">
                 @if (User.Identity.IsAuthenticated)
                 {
+
                     <ul class="uk-iconnav">
+                        <li>
+                            <a asp-controller="User"
+                               asp-action="Index">
+                               @User.Identity.Name
+                            </a>
+                        </li>
                         <li>
                             <a asp-controller="User"
                                asp-action="Index">

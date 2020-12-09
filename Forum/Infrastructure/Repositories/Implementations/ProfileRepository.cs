@@ -30,7 +30,7 @@ namespace Forum.Repositories.Implementations
             Profile result = context.Profile.Find(key);
             if (result == null)
             {
-                throw new ProfileNotFoundException("Profile with id " + key + " not found");
+                throw new BusinessException(ErrorCode.USER_NOT_FOUND);
             }
             return result;
         }
@@ -47,7 +47,7 @@ namespace Forum.Repositories.Implementations
             Profile result = context.Profile.Find(key);
             if (result == null)
             {
-                throw new ProfileNotFoundException("Profile with id " + key + " not found");
+                throw new BusinessException(ErrorCode.USER_NOT_FOUND);
             }
             context.Profile.Remove(result);
         }

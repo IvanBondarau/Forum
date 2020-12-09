@@ -15,10 +15,15 @@
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                    <input asp-for="Password" class="uk-input" type="text" placeholder="Password">
+                    <input asp-for="Password" class="uk-input" type="password" placeholder="Password">
                 </div>
             </div>
-
+            @if (Model.IsError)
+            {
+                <div class="uk-margin uk-text-center">
+                    <p class="uk-text-danger">Invalid credentials</p>
+                </div>
+            }
             <div class="uk-margin uk-text-center">
                 <button type="submit" class="uk-button uk-button-primary">Log in</button>
             </div>

@@ -30,7 +30,7 @@ namespace Forum.Repositories.Implementations
             User result = context.User.Include(u => u.Profile).Include(u => u.Roles).First(u => u.UserId == key);
             if (result == null)
             {
-                throw new UserNotFoundException("User with id " + key + " not found");
+                throw new BusinessException(ErrorCode.USER_NOT_FOUND);
             }
             return result;
         }
@@ -47,7 +47,7 @@ namespace Forum.Repositories.Implementations
             User result = context.User.Find(key);
             if (result == null)
             {
-                throw new UserNotFoundException("User with id " + key + " not found");
+                throw new BusinessException(ErrorCode.USER_NOT_FOUND);
             }
             context.User.Remove(result);
         }

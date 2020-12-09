@@ -23,9 +23,9 @@ namespace Forum.Controllers
             this.userService = userService;
         }
 
-        public IActionResult Login()
+        public IActionResult Login(bool isError)
         {
-            return View();
+            return View(new LoginViewModel { IsError = isError });
         }
 
         public IActionResult Register()

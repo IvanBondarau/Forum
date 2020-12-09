@@ -65,14 +65,14 @@ namespace Forum.Services.Implementatios
             } 
             else
             {
-                throw new UserNotFoundException("User with credentials not found");
+                throw new BusinessException(ErrorCode.INVALID_CREDENTIALS);
             }
         }
 
         public User GetByUsername(string username)
         {
             User searchResult = userRepository.FindByUsername(username);
-            return searchResult != null ? searchResult : throw new UserNotFoundException("User with username " + username +" not found");
+            return searchResult != null ? searchResult : throw new BusinessException(ErrorCode.USER_NOT_FOUND);
         }
 
         public void Feature(string username, Topic topic)

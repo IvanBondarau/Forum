@@ -28,10 +28,10 @@ namespace Forum.Repositories.Implementations
 
         public Topic Read(int key)
         {
-            Topic result = context.Topic.Find(key);
+            Topic result = context.Topic.Include(t => t.Author).First( t=> t.TopicId.Equals(key));
             if (result == null)
             {
-                throw new TopicNotFoundException("Topic with id " + key + " not found");
+                throw new BusinessException(ErrorCode.TOPIC_NOT_FOUND); ;
             }
             return result;
         }
@@ -47,7 +47,7 @@ namespace Forum.Repositories.Implementations
             Topic result = context.Topic.Find(key);
             if (result == null)
             {
-                throw new TopicNotFoundException("Topic with id " + key + " not found");
+                throw new BusinessException(ErrorCode.TOPIC_NOT_FOUND);
             }
             context.Topic.Remove(result);
             context.SaveChanges();
