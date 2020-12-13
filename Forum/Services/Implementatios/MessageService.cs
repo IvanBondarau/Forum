@@ -22,9 +22,9 @@ namespace Forum.Services.Implementatios
             this.userRepository = userRepository;
         }
 
-        public int CountPages()
+        public int CountPages(int topicId)
         {
-            int cnt = this.messageRepository.Count();
+            int cnt = this.messageRepository.Count(topicId);
             int pageSize = ApplicationConstants.MESSAGE_PAGE_SIZE;
             return cnt / pageSize + (cnt % pageSize == 0 ? 0 : 1);
         }

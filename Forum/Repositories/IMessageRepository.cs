@@ -9,6 +9,6 @@ namespace Forum.Repositories
     public interface IMessageRepository: ICrudRepository<int, Message>
     {
         ICollection<Message> FindByTopicId(int topicId, int pageNumber, int pageSize);
-        public int Count();
+        public int Count( int topicId);
     }
 }

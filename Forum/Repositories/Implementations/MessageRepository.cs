@@ -91,9 +91,9 @@ namespace Forum.Repositories.Implementations
                 .ToList();
         }
 
-        public int Count()
+        public int Count(int topicId)
         {
-            return context.Message.Count();
+            return context.Message.Include(m => m.Topic).Where(m => m.Topic.TopicId == topicId).Count();
         }
     }
 }
