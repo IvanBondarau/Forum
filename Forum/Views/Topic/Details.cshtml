@@ -3,6 +3,7 @@
 @section Scripts {
     <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/topic.js"></script>
+    <script src="~/js/message.js"></script>
 }
 <div uk-grid class="uk-width-expand">
     <div class="uk-width-1-3 uk-flex uk-flex-right">
@@ -81,7 +82,7 @@
                     </div>
                     <div class="uk-card-footer">
                         <div class="uk-text-right">
-                            <span class="uk-text-muted">@(message.Likes == null ? 0 : message.Likes.Count())</span>
+                            <span id="message-@message.MessageId-likes" class="uk-text-muted">@(message.Likes == null ? 0 : message.Likes.Count())</span>
                             <button class="uk-icon-button" uk-icon="heart" onclick="LikeMessage(@message.MessageId)"></button>
                         </div>
                     </div>

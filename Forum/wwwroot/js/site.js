@@ -62,7 +62,7 @@ function LikeMessage(messageId) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         complete: function (result) {
-            alert(result);
+            console.log(result);
         },  
 
     })

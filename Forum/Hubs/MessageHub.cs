@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Forum.Hubs
 {
-    public class TopicHub: Hub
+    public class MessageHub: Hub
     {
-        public void SendTopicUpdated(int topicId)
+        
+        public void SendMessageUpdated(int messageId, int likes)
         {
-            Clients.All.SendAsync("UpdateTopic", topicId);
+            Clients.All.SendAsync("UpdateMessage", messageId, likes);
         }
+        
     }
 }

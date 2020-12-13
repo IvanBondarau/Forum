@@ -28,7 +28,7 @@ namespace Forum.Repositories.Implementations
 
         public Message Read(int key)
         {
-            Message result = context.Message.Include(m => m.Likes).First(m => m.MessageId == key);
+            Message result = context.Message.Include(m => m.Likes).FirstOrDefault(m => m.MessageId == key);
             if (result == null)
             {
                 throw new BusinessException(ErrorCode.MESSAGE_NOT_FOUND);

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Forum.Controllers
 {
+    [AutoValidateAntiforgeryToken]
     public class AccountController : Controller
     {
         private readonly IUserService userService;
@@ -33,12 +34,38 @@ namespace Forum.Controllers
             return View();
         }
 
+        public IActionResult Created()
+        {
+            return View();
+        }
+
+        public IActionResult ChangePassword(string error)
+        {
+            return View(new ChangePasswordViewModel { Error = error });
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel viewModel)
+        public IActionResult ChangePassword(ChangePasswordViewModel viewModel)
+        {
+            User user = userService.GetByUsername(User.Identity.Name);
+            if (!user.Password.Equals(viewModel.OldPassword))
+            {
+                return RedirectToAction("ChangePassword", "Account", new { error = "Old password is invalid" });
+            }
+            if (!viewModel.NewPassword.Equals(viewModel.NewPasswordRepeat))
+            {
+                return RedirectToAction("ChangePassword", "Account", new { error = "Passwords don't match" });
+            }
+            user.Password = viewModel.NewPassword;
+            userService.Update(user);
+            return RedirectToAction("Index", "User");
+        }
+
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel viewModel)
         {
             User CreatedUser = userService.CreateUser(viewModel.Username, viewModel.Email, viewModel.Password);
-            await Authenticate(CreatedUser);
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("Created", "Account");
         }
 
         [HttpPost]

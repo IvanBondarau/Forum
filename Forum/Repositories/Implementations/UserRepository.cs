@@ -27,7 +27,7 @@ namespace Forum.Repositories.Implementations
 
         public User Read(int key)
         {
-            User result = context.User.Include(u => u.Profile).Include(u => u.Roles).First(u => u.UserId == key);
+            User result = context.User.Include(u => u.Profile).Include(u => u.Roles).FirstOrDefault(u => u.UserId == key);
             if (result == null)
             {
                 throw new BusinessException(ErrorCode.USER_NOT_FOUND);

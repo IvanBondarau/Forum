@@ -6,11 +6,13 @@ using Forum.Hubs;
 using Forum.Models;
 using Forum.Services;
 using Forum.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Forum.Controllers
 {
+    [AutoValidateAntiforgeryToken]
     public class TopicController : Controller
     {
         private readonly ITopicService topicService;
@@ -33,6 +35,7 @@ namespace Forum.Controllers
         }
 
         // GET: TopicController/Details/5
+        [Authorize]
         public ActionResult Details(int id, int? page)
         {
             User user = userService.GetByUsername(User.Identity.Name);
@@ -42,17 +45,20 @@ namespace Forum.Controllers
         }
 
         // GET: TopicController/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult Featured(int? page)
         {
             ICollection<Topic> topics = topicService.FindFeatured(User.Identity.Name, page);
             return View("Index",new TopicListViewModel(topics, page ?? 1, topicService.CountPages()));
         }
 
+        [Authorize]
         public ActionResult Feature(int id)
         {
             Topic topic = topicService.Read(id);
@@ -61,6 +67,7 @@ namespace Forum.Controllers
 
         }
 
+        [Authorize]
         public ActionResult Like(int id)
         {
             Message message = messageService.Read(id);
@@ -71,7 +78,6 @@ namespace Forum.Controllers
 
         // POST: TopicController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(TopicCreateViewModel topicCreateViewModel)
         {
             User currentUser = userService.GetByUsername(User.Identity.Name);
@@ -89,6 +95,7 @@ namespace Forum.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Search(TopicSearchViewModel topicSearchViewModel)
         {
             return RedirectToAction("Search", "Topic", new { name = topicSearchViewModel.Name, labels = topicSearchViewModel.Labels });

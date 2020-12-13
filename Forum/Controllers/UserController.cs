@@ -36,11 +36,9 @@ namespace Forum.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create()
         {
-
-
-
             return RedirectToAction("Index", "User");
         }
 
@@ -64,6 +62,8 @@ namespace Forum.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+      
         public IActionResult UpdateProfile(UserViewModel userView)
         {
             User user = userService.GetByUsername(User.Identity.Name);

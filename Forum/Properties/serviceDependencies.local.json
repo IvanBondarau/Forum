@@ -8,6 +8,11 @@
       "type": "mssql.azure",
       "connectionId": "ForumAppDn",
       "secretStore": "LocalSecretsFile"
+    },
+    "mssql2": {
+      "type": "mssql.local",
+      "connectionId": "ForumAppTest",
+      "secretStore": "LocalSecretsFile"
     }
   }
 }

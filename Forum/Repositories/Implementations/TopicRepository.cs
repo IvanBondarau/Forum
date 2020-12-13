@@ -28,7 +28,7 @@ namespace Forum.Repositories.Implementations
 
         public Topic Read(int key)
         {
-            Topic result = context.Topic.Include(t => t.Author).First( t=> t.TopicId.Equals(key));
+            Topic result = context.Topic.Include(t => t.Author).FirstOrDefault( t=> t.TopicId.Equals(key));
             if (result == null)
             {
                 throw new BusinessException(ErrorCode.TOPIC_NOT_FOUND); ;
@@ -79,7 +79,7 @@ namespace Forum.Repositories.Implementations
 
         public Topic FindByName(string name)
         {
-            return context.Topic.First(topic => topic.Name.Equals(name));
+            return context.Topic.FirstOrDefault(topic => topic.Name.Equals(name));
         }
 
         public ICollection<Topic> FindPage(int pageNumber, int pageSize)
@@ -102,6 +102,7 @@ namespace Forum.Repositories.Implementations
             return context.Topic
                 .Include(t => t.FeaturedUsers)
                 .Include(t => t.Labels)
+                .Include(t => t.Author)
                 .Where(t => t.FeaturedUsers.Any(u => u.Username.Equals(username)))
                 .Where(t => !t.Author.Banned)
                 .ToPagedList(pageNumber, pageSize)

@@ -37,16 +37,17 @@ namespace Forum
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<ITopicService, TopicService>();
-            services.AddScoped<IMailService, MailService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<ITopicService, TopicService>();
+            services.AddSingleton<IMailService, MailService>();
 
             // установка конфигурации подключения
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options => //CookieAuthenticationOptions
                 {
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                    options.LogoutPath = new Microsoft.AspNetCore.Http.PathString("/Account/LogOut");
                 });
         }
 
@@ -74,8 +75,9 @@ namespace Forum
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Topic}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<TopicHub>("/topichub");
+                endpoints.MapHub<MessageHub>("/messagehub");
 
             });
         }
