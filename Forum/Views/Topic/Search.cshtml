@@ -74,6 +74,25 @@
 
                 </div>
             }
+
+            <div class="uk-align-center">
+                <ul class="uk-pagination" uk-margin>
+                    @if (Model.PageNumber != 1)
+                    {
+                        <li><a href="/Topic/Search?page=@(Model.PageNumber-1)"><span uk-pagination-previous></span></a></li>
+                    }
+                    <li><a href="/Topic/Search?page=1">1</a></li>
+                    <li class="uk-disabled"><span>...</span></li>
+                    <li class="uk-active"><span>@Model.PageNumber</span></li>
+                    <li class="uk-disabled"><span>...</span></li>
+                    <li><a href="/Topic/Search?page=@Model.TotalPages">@Model.TotalPages</a></li>
+                    @if (Model.PageNumber < Model.TotalPages)
+                    {
+
+                        <li><a href="/Topic/Search?page=@(Model.PageNumber+1)"><span uk-pagination-next></span></a></li>
+                    }
+                </ul>
+            </div>
         </div>
 
     </div>

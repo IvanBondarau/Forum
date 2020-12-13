@@ -43,37 +43,56 @@
         <div class="uk-flex uk-flex-column uk-width-2-3">
             @foreach (var topic in @Model.Topics)
             {
-               <div class="uk-card uk-card-small uk-card-default uk-card-hover uk-margin-small-top uk-width-2xlarge">
-                        <div class="uk-card uk-card-small uk-card-default uk-card-hover uk-margin-small-top">
-                            <div class="uk-card-body">
-                                <h3 class="uk-card-title">
-                                    <a href="/Topic/Details/@topic.TopicId" class="uk-link-heading">@topic.Name</a>
-                                    <a asp-controller="Topic" asp-action="Feature" asp-route-id="@topic.TopicId" class="uk-icon-link" uk-icon="star"></a>
-                                </h3>
-                                <p>@topic.Description</p>
-                                @if (topic.Author.Username.Equals(User.Identity.Name))
+                <div class="uk-card uk-card-small uk-card-default uk-card-hover uk-margin-small-top uk-width-2xlarge">
+                    <div class="uk-card uk-card-small uk-card-default uk-card-hover uk-margin-small-top">
+                        <div class="uk-card-body">
+                            <h3 class="uk-card-title">
+                                <a href="/Topic/Details/@topic.TopicId" class="uk-link-heading">@topic.Name</a>
+                                <a asp-controller="Topic" asp-action="Feature" asp-route-id="@topic.TopicId" class="uk-icon-link" uk-icon="star"></a>
+                            </h3>
+                            <p>@topic.Description</p>
+                            @if (topic.Author.Username.Equals(User.Identity.Name))
+                            {
+                                <div class="uk-card-badge uk-label">Created</div>
+                            }
+                        </div>
+                        <div class="uk-card-footer">
+                            <div class="uk-flex uk-flex-wrap uk-flex-wrap-around">
+                                @if (topic.Labels != null)
                                 {
-                                    <div class="uk-card-badge uk-label">Created</div>
-                                }
-                            </div>
-                            <div class="uk-card-footer">
-                                <div class="uk-flex uk-flex-wrap uk-flex-wrap-around">
-                                    @if (topic.Labels != null)
+                                    @foreach (var label in topic.Labels)
                                     {
-                                        @foreach (var label in topic.Labels)
-                                        {
-                                            <div class="uk-label uk-margin-small-right uk-margin-small-top">
-                                                @label.Name
-                                            </div>
-                                        }
+                                        <div class="uk-label uk-margin-small-right uk-margin-small-top">
+                                            @label.Name
+                                        </div>
                                     }
+                                }
 
-                                </div>
                             </div>
                         </div>
-
                     </div>
+
+                </div>
             }
+
+            <div class="uk-align-center">
+                <ul class="uk-pagination" uk-margin>
+                    @if (Model.PageNumber != 1)
+                    {
+                        <li><a href="/Topic/Search?page=@(Model.PageNumber-1)"><span uk-pagination-previous></span></a></li>
+                    }
+                    <li><a href="/Topic/Search?page=1">1</a></li>
+                    <li class="uk-disabled"><span>...</span></li>
+                    <li class="uk-active"><span>@Model.PageNumber</span></li>
+                    <li class="uk-disabled"><span>...</span></li>
+                    <li><a href="/Topic/Search?page=@Model.TotalPages">@Model.TotalPages</a></li>
+                    @if (Model.PageNumber < Model.TotalPages)
+                    {
+
+                        <li><a href="/Topic/Search?page=@(Model.PageNumber+1)"><span uk-pagination-next></span></a></li>
+                    }
+                </ul>
+            </div>
         </div>
 
     </div>

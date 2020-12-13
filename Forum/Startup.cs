@@ -8,6 +8,7 @@ using Forum.Services.Implementatios;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,15 +38,16 @@ namespace Forum
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped<ITopicService, TopicService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<ITopicService, TopicService>();
             services.AddSingleton<IMailService, MailService>();
 
             // установка конфигурации подключения
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options => //CookieAuthenticationOptions
                 {
+                    
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                     options.LogoutPath = new Microsoft.AspNetCore.Http.PathString("/Account/LogOut");
                 });
@@ -69,7 +71,12 @@ namespace Forum
             app.UseRouting();
 
             app.UseAuthentication();    
-            app.UseAuthorization();    
+            app.UseAuthorization();
+
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict
+            }) ;
 
             app.UseEndpoints(endpoints =>
             {

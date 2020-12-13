@@ -94,7 +94,7 @@
                     {
                         <li><a href="/Topic/Details/@Model.Topic.TopicId?page=@(Model.PageNumber-1)"><span uk-pagination-previous></span></a></li>
                     }
-                    <li><a href="/Topic/Details/1">1</a></li>
+                    <li><a href="/Topic/Details/@Model.Topic.TopicId?page=1">1</a></li>
                     <li class="uk-disabled"><span>...</span></li>
                     <li class="uk-active"><span>@Model.PageNumber</span></li>
                     <li class="uk-disabled"><span>...</span></li>

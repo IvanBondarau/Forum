@@ -93,8 +93,16 @@ namespace Forum.Controllers
 
             AddRoles(claims, user);
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            
-            await HttpContext.SignInAsync( CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
+
+            var authProperties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1),
+                IsPersistent = true,
+                IssuedUtc = DateTimeOffset.UtcNow,
+            };
+
+            await HttpContext.SignInAsync( CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id), authProperties);
         }
 
         private void AddRoles(List<Claim> claims, User user)
