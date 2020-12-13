@@ -54,6 +54,7 @@ namespace Forum.Controllers
         }
 
         [HttpDelete]
+        [IgnoreAntiforgeryToken]
         public void Delete(int id)
         {
             messageService.Delete(id);
