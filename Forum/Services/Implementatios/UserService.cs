@@ -15,7 +15,6 @@ namespace Forum.Services.Implementatios
 
     public class UserService : AbstractCrudService<int, User>, IUserService
     {
-        private const string BASE_URL = "https://localhost:44399";
 
         private readonly IUserRepository userRepository;
         private readonly IProfileRepository profileRepository;
@@ -147,7 +146,7 @@ namespace Forum.Services.Implementatios
         private string GenerateVerificationUrl(int accountId, string verificationString)
         {
 
-            return BASE_URL + "/Account/Verify/" + accountId + "?verificationString=" + verificationString;
+            return ApplicationConstants.BASE_URL + "/Account/Verify/" + accountId + "?verificationString=" + verificationString;
         }
     }
 }
