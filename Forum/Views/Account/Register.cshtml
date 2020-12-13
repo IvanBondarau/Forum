@@ -9,21 +9,31 @@
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: user"></span>
-                    <input asp-for="Username" class="uk-input" type="text" placeholder="Username">
+                    <input asp-for="Username" class="uk-input" type="text"
+                           minlength="5"
+                           maxlength="30"
+                           pattern="[a-zA-Z][A-Za-z0-9]+"
+                           placeholder="Username" required>
                 </div>
             </div>
 
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: mail"></span>
-                    <input asp-for="Email" class="uk-input" type="email" placeholder="Email">
+                    <input asp-for="Email" class="uk-input" 
+                           type="email"
+                           pattern="[a-z0-9._%+-]+@@[a-z0-9.-]+\.[a-z]{2,}$"
+                           placeholder="Email" required>
                 </div>
             </div>
 
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                    <input asp-for="Password" class="uk-input" type="password" placeholder="Password">
+                    <input asp-for="Password" 
+                           class="uk-input" 
+                           type="password"
+                           minlength="6" placeholder="Password" required>
                     <span asp-validation-for="Password" />
                 </div>
             </div>
@@ -31,7 +41,7 @@
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon"></span>
-                    <input asp-for="ConfirmPassword" class="uk-input" type="password" placeholder="Repeat password">
+                    <input asp-for="ConfirmPassword" class="uk-input" type="password" minlength="6" placeholder="Repeat password" required>
                     <span asp-validation-for="ConfirmPassword" />
                 </div>
             </div>

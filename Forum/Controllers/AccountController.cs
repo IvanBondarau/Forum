@@ -76,11 +76,10 @@ namespace Forum.Controllers
             return RedirectToAction("Index", "User");
         }
 
-        public async Task<IActionResult> Verify(int id, string verificationString)
+        public IActionResult Verify(int id, string verificationString)
         {
             User user = userService.Verify(id, verificationString);
-            await Authenticate(user);
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("Login", "Account");
         }
 
         private async Task Authenticate(User user)

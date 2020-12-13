@@ -5,6 +5,11 @@
 
 function AddLabel() {
     let labelName = document.getElementById('label-name-input').value;
+    if (labelName == null || labelName.trim() == '') {
+        return
+    }
+
+    labelName = labelName.trim().toUpperCase()
     let label = document.createElement('div')
     label.classList.add('uk-label')
     label.classList.add('uk-margin-small-bottom')

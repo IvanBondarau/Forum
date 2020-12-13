@@ -47,8 +47,8 @@
                     <div class="uk-card uk-card-small uk-card-default uk-card-hover uk-margin-small-top">
                         <div class="uk-card-body">
                             <h3 class="uk-card-title">
-                                <a class="uk-link-heading" href="#">@topic.Name</a>
-                                <a href="" class="uk-icon-link" uk-icon="star"></a>
+                                <a class="uk-link-heading" href="/Topic/Details/@topic.TopicId">@topic.Name</a>
+                                <a asp-controller="Topic" asp-action="Feature" asp-route-id="@topic.TopicId" class="uk-icon-link" uk-icon="star"></a>
                             </h3>
                             <p>@topic.Description</p>
                             @if (topic.Author.Username.Equals(User.Identity.Name))
@@ -56,21 +56,23 @@
                                 <div class="uk-card-badge uk-label">Created</div>
                             }
                         </div>
-                        <div class="uk-card-footer">
-                            <div class="uk-flex uk-flex-wrap uk-flex-wrap-around">
-                                @if (topic.Labels != null)
-                                {
+                        @if (topic.Labels != null && !(topic.Labels.Count() == 0))
+                        {
+                            <div class="uk-card-footer">
+                                <div class="uk-flex uk-flex-wrap uk-flex-wrap-around">
+
                                     @foreach (var label in topic.Labels)
                                     {
                                         <div class="uk-label uk-margin-small-right uk-margin-small-top">
                                             @label.Name
                                         </div>
                                     }
-                                }
+                                    
 
+                                </div>
                             </div>
+                        }
                         </div>
-                    </div>
 
                 </div>
             }

@@ -77,7 +77,13 @@ namespace Forum.Services.Implementatios
         public void Feature(string username, Topic topic)
         {
             User user = GetByUsername(username);
-            user.Featured.Add(topic);
+            if (user.Featured.Contains(topic))
+            {
+                user.Featured.Remove(topic);
+            } else
+            {
+                user.Featured.Add(topic);
+            }
             userRepository.Update(user);
         }
 

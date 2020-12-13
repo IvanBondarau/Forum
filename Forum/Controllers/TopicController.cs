@@ -31,7 +31,7 @@ namespace Forum.Controllers
         {
             page = page == null ? 1 : (int)page;
             ICollection<Topic> topics = topicService.FindPage(page);
-            return View(new TopicListViewModel(topics, page ?? 1, topicService.CountPages()));
+            return View("Search" ,new TopicListViewModel(topics, page ?? 1, topicService.CountPages()));
         }
 
         // GET: TopicController/Details/5
@@ -54,8 +54,8 @@ namespace Forum.Controllers
         [Authorize]
         public ActionResult Featured(int? page)
         {
-            ICollection<Topic> topics = topicService.FindFeatured(User.Identity.Name, page);
-            return View("Index",new TopicListViewModel(topics, page ?? 1, topicService.CountPages()));
+            ICollection<Topic> topics = topicService.FindFeatured(User.Identity.Name);
+            return View("Featured", new TopicListViewModel(topics, page ?? 1, topicService.CountPages()));
         }
 
         [Authorize]
@@ -106,7 +106,7 @@ namespace Forum.Controllers
             string name = Request.Query["name"];
             ICollection<Label> labels = ParseLabels(Request.Query["labels"]);
             ICollection<Topic> searchResult = topicService.Find(name, labels, page);
-            return View("Index", new TopicListViewModel(searchResult, page ?? 1, topicService.CountPages()));
+            return View("Search", new TopicListViewModel(searchResult, page ?? 1, topicService.CountPages()));
         }
 
         // GET: TopicController/Edit/5

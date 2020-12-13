@@ -21,11 +21,11 @@
                 <form asp-controller="User" asp-action="UpdateProfile" class="uk-grid-small uk-margin-small-top" uk-grid>
                     <div class="uk-width-1-1@s">
                         <label for="name" class="uk-form-label">Name</label>
-                        <input readonly asp-for="Name" class="uk-input" type="text" placeholder="Name" value="@Model.Name">
+                        <input readonly asp-for="Name" class="uk-input" type="text" placeholder="Name" value="@Model.Name" disabled>
                     </div>
                     <div class="uk-width-1-1@s">
                         <label for="name" class="uk-form-label">About</label>
-                        <textarea readonly asp-for="About" rows="3" class="uk-textarea" type="text" placeholder="About" value="@Model.About"></textarea>
+                        <textarea readonly asp-for="About" rows="3" class="uk-textarea" type="text" placeholder="About" value="@Model.About" disabled></textarea>
                     </div>
                 </form>
             </div>

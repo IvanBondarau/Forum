@@ -12,6 +12,6 @@ namespace Forum.Repositories
         Topic FindByName(string name);
         ICollection<Topic> FindPage(int pageNumber, int pageSize);
         ICollection<Topic> Find(string name, ICollection<Label> labels, int pageNumber, int pageSize);
-        ICollection<Topic> FindFeatured(string username, int pageNumber, int pageSize);
+        ICollection<Topic> FindFeatured(string username);
     }
 }

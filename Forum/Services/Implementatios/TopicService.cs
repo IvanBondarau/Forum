@@ -39,9 +39,9 @@ namespace Forum.Services.Implementations
             return this.topicRepository.Find(cleanedName, cleanedLabels, pageNumber == null ? 1 : (int)pageNumber, ApplicationConstants.TOPIC_PAGE_SIZE);
         }
 
-        public ICollection<Topic> FindFeatured(string username, int? pageNumber)
+        public ICollection<Topic> FindFeatured(string username)
         {
-            return this.topicRepository.FindFeatured(username, pageNumber == null ? 1 : (int)pageNumber, ApplicationConstants.TOPIC_PAGE_SIZE);
+            return this.topicRepository.FindFeatured(username);
         }
 
         public int CountPages()

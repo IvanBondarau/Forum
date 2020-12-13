@@ -84,7 +84,7 @@ namespace Forum.Repositories.Implementations
 
         public ICollection<Topic> FindPage(int pageNumber, int pageSize)
         {
-            return context.Topic.Include(t => t.Author).Include(t => t.Labels).ToPagedList(pageNumber, pageSize).ToList<Topic>();
+            return context.Topic.Include(t => t.Author).Include(t => t.Labels).Where(t => !t.Author.Banned).ToPagedList(pageNumber, pageSize).ToList<Topic>();
         }
 
         public ICollection<Topic> Find(string name, ICollection<Label> labels, int pageNumber, int pageSize)
@@ -94,10 +94,11 @@ namespace Forum.Repositories.Implementations
             return context.Topic.Include(t => t.Author).Include(t => t.Labels)
                  .AsEnumerable()
                  .Where(t => regex.IsMatch(t.Name) && labels.All(label => t.Labels.Any(tlabel => tlabel.Name.Equals(label.Name))))
+                 .Where(t => !t.Author.Banned)
                  .ToPagedList(pageNumber, pageSize).ToList();
         }
 
-        public ICollection<Topic> FindFeatured(string username, int pageNumber, int pageSize)
+        public ICollection<Topic> FindFeatured(string username)
         {
             return context.Topic
                 .Include(t => t.FeaturedUsers)
@@ -105,7 +106,6 @@ namespace Forum.Repositories.Implementations
                 .Include(t => t.Author)
                 .Where(t => t.FeaturedUsers.Any(u => u.Username.Equals(username)))
                 .Where(t => !t.Author.Banned)
-                .ToPagedList(pageNumber, pageSize)
                 .ToList();
         }
 

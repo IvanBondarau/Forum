@@ -52,7 +52,11 @@ namespace Forum.Services.Implementatios
             {
                 message.Likes = new List<User>();
             }
-            if (!message.Likes.Contains(user))
+            if (message.Likes.Contains(user))
+            {
+                message.Likes.Remove(user);
+                messageRepository.Update(message);
+            } else
             {
                 message.Likes.Add(user);
                 messageRepository.Update(message);

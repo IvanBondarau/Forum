@@ -8,7 +8,7 @@
             <div class="uk-margin">
                 <label for="name" class="uk-form-label">Name</label>
                 <div class="uk-form-controls">
-                    <input asp-for="Name" id="name" class="uk-input uk-form-width-large" type="text" placeholder="Name">
+                    <input asp-for="Name" id="name" class="uk-input uk-form-width-large" type="text" placeholder="Name" required minlength="5">
                 </div>
             </div>
             <input class="labels-input" asp-for="Labels" type="hidden" />
@@ -27,7 +27,7 @@
             <div class="uk-margin">
                 <label for="description" class="uk-form-label">Description</label>
                 <div class="uk-form-controls">
-                    <textarea asp-for="Description" id="description" class="uk-textarea uk-form-width-large" rows="5" placeholder="Textarea"></textarea>
+                    <textarea asp-for="Description" id="description" class="uk-textarea uk-form-width-large" rows="5" placeholder="Write topic description"></textarea>
                 </div>
             </div>
 

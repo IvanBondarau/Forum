@@ -19,7 +19,14 @@
                     <div class="uk-margin">
                         <label class="uk-form-label" for="form-horizontal-text"><h5>Username</h5></label>
                         <div class="uk-form-controls">
-                            <input class="uk-input" asp-for="Username" type="text" placeholder="Some text..." value="@Model.Username">
+                            <input class="uk-input" 
+                                   asp-for="Username" type="text" 
+                                   placeholder="Some text..." 
+                                   value="@Model.Username"
+                                   minlength="5"
+                                   maxlength="30"
+                                   pattern="[a-zA-Z][A-Za-z0-9]+"
+                                   required>
                         </div>
                     </div>
 
@@ -38,11 +45,13 @@
                     <img class="uk-border-circle" width="200" height="200" src="@Model.ImagePath">
                     <div class="uk-margin">
                         <form enctype="multipart/form-data" asp-controller="User" asp-action="Upload">
-                            <div uk-form-custom>
-                                <input name="Image" id="Image" type="file">
-                                <button class="uk-button uk-button-primary" type="button" tabindex="-1">Select</button>
+                            <div class="uk-margin" uk-margin>
+                                <div uk-form-custom="target: true">
+                                    <input type="file" name="Image" id="image" required>
+                                    <input class="uk-input uk-form-width-medium" type="text" placeholder="Select image" disabled>
+                                </div>
+                                <button class="uk-button uk-button-default">Submit</button>
                             </div>
-                            <button class="uk-button" type="submit">Save</button>
                         </form>
 
                     </div>
@@ -58,7 +67,7 @@
                 <form asp-controller="User" asp-action="UpdateProfile" class="uk-grid-small uk-margin-small-top" uk-grid>
                     <div class="uk-width-1-1@s">
                         <label for="name" class="uk-form-label">Name</label>
-                        <input asp-for="Name" class="uk-input" type="text" placeholder="Name" value="@Model.Name">
+                        <input asp-for="Name" class="uk-input" type="text" placeholder="Name" value="@Model.Name" required>
                     </div>
                     <div class="uk-width-1-1@s">
                         <label for="name" class="uk-form-label">About</label>

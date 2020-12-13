@@ -8,14 +8,14 @@
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: user"></span>
-                    <input asp-for="Username" class="uk-input" type="text" placeholder="Username">
+                    <input asp-for="Username" class="uk-input" type="text" placeholder="Username" required>
                 </div>
             </div>
 
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                    <input asp-for="Password" class="uk-input" type="password" placeholder="Password">
+                    <input asp-for="Password" class="uk-input" type="password" placeholder="Password" required>
                 </div>
             </div>
             @if (Model.IsError)

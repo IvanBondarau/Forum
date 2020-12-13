@@ -11,7 +11,7 @@ namespace Forum.Services
         Topic FindByName(String name);
         ICollection<Topic> FindPage(int? pageNumber);
         ICollection<Topic> Find(string name, ICollection<Label> labels, int? pageNumber);
-        public ICollection<Topic> FindFeatured(string username, int? pageNumber);
+        public ICollection<Topic> FindFeatured(string username);
         public int CountPages();
     }
 }
