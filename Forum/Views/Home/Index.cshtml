@@ -6,7 +6,9 @@
     <div class="uk-background-muted uk-padding uk-margin-small-top uk-width-1-2">
         <h3>Welcome to WebForum!</h3>
         <p>WebForum is a simple web forum application. You can chat with other participants in already created topics, or create your own topics to discuss issues of interest to you.</p>
-        <br />
-        <p>To start a discussion, <a asp-controller="Account" asp-action="Register">sign up</a> or  <a asp-controller="Account" asp-action="Login">log in</a>.</p>
+        @if (!User.Identity.IsAuthenticated) {
+            <br />
+            <p>To start a discussion, <a asp-controller="Account" asp-action="Register">sign up</a> or  <a asp-controller="Account" asp-action="Login">log in</a>.</p>
+        }
     </div>
 </div>

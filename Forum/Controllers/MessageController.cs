@@ -44,6 +44,7 @@ namespace Forum.Controllers
         }
 
         [HttpPost]
+        [IgnoreAntiforgeryToken]
         public void Like(int id)
         {
             messageService.Like(id, User.Identity.Name);

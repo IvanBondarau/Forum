@@ -37,9 +37,9 @@ namespace Forum
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IProfileRepository, ProfileRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IMessageService, MessageService>();
-            services.AddTransient<ITopicService, TopicService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<ITopicService, TopicService>();
             services.AddSingleton<IMailService, MailService>();
 
             // установка конфигурации подключения

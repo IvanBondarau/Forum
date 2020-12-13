@@ -67,7 +67,7 @@ namespace Forum.Controllers
 
         }
 
-        [Authorize]
+        [IgnoreAntiforgeryToken]
         public ActionResult Like(int id)
         {
             Message message = messageService.Read(id);
