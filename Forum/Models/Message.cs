@@ -27,7 +27,7 @@ namespace Forum.Models
         {
             Text = text;
             Author = author;
-            Created = DateTime.Now;
+            Created = DateTime.UtcNow;
             this.Topic = topic;
         }
 
